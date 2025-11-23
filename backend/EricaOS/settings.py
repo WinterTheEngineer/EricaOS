@@ -50,6 +50,7 @@ SIMPLE_JWT = {
 INSTALLED_APPS = [
     'api',
     'accounts',
+    'lists',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
