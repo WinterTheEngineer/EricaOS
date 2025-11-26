@@ -9,6 +9,7 @@ function Notes () {
 
     useEffect(() => {
         getNotes();
+        document.title = "EricaOS - Your Notes"
     }, [])
 
     const getNotes = () => {
