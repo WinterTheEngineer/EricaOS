@@ -7,7 +7,7 @@ function Lists () {
     }, []);
 
     return (<>
-        <h1>Lists</h1>
+        <h3 className="site-header">Lists</h3>
     </>)
 }
 

@@ -9,7 +9,7 @@ function Notes () {
 
     useEffect(() => {
         getNotes();
-        document.title = "EricaOS - Your Notes"
+        document.title = "Notes - EricaOS"
     }, [])
 
     const getNotes = () => {
@@ -49,11 +49,14 @@ function Notes () {
     }
 
     return (<>
-        <div className="notes-container">
-            <h2>Notes</h2>
-            {notes.map((note) => <Note note={note} onDelete={deleteNote} key={note.id} />)}
-        </div>
-        <div>
+    <div className="header notes-header">
+        <h3 className="site-header">Your Notes</h3>
+    </div>
+    <div className="content-container notes-container">
+        {notes.map((note) => <Note note={note} onDelete={deleteNote} key={note.id} />)}
+    </div>
+
+        {/* <div>
             <h2>Create a Note</h2>
             <form onSubmit={createNote}>
                 <label htmlFor="title">Title:</label>
@@ -75,7 +78,7 @@ function Notes () {
 
                 <input type="submit" value="submit"/>
             </form>
-        </div>
+        </div> */}
     </>)
 }
 
