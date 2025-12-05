@@ -74,6 +74,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'EricaOS.urls'
+AUTH_USER_MODEL = "accounts.User"
 
 TEMPLATES = [
     {
