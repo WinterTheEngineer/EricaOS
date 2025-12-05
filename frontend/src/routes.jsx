@@ -5,8 +5,9 @@ import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import DashLayout from './Layouts/DashLayout';
+import AuthLayout from './Layouts/AuthLayout';
 import GuestRoute from './components/GuestRoute';
-import { Route, Navigate, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
+import { Route, Navigate, createBrowserRouter, createRoutesFromElements, Routes } from "react-router-dom"
 import ProtectedRoute from './components/ProtectedRoutes';
 
 function Logout() {
@@ -20,39 +21,21 @@ function RegisterAndLogout() {
 }
 
 export const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route path="/" element={<DashLayout />}>
-            <Route index element={
-                <ProtectedRoute>
-                    <Dashboard />
-                </ProtectedRoute>
-            } />
-            
-            <Route path='/lists' element={
-                <ProtectedRoute>
-                    <Lists />
-                </ProtectedRoute>
-            } />
-            
-            <Route path='/notes' element={
-                <ProtectedRoute>
-                    <Notes />
-                </ProtectedRoute>
-            } />
-            
-            <Route path="/login" element={
-                <GuestRoute>
-                    <Login />
-                </GuestRoute>
-            } />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/register" element={
-                <GuestRoute>
-                    <RegisterAndLogout />
-                </GuestRoute>
-            } />
-            
-            <Route path="*" element={<NotFound />} />
-        </Route>
-    )
-)
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<DashLayout />}>
+        <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="lists" element={<ProtectedRoute><Lists /></ProtectedRoute>} />
+        <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
+      </Route>
+
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+        <Route path="/register" element={<GuestRoute><RegisterAndLogout /></GuestRoute>} />
+      </Route>
+
+      <Route path="/logout" element={<Logout />} />
+      <Route path="*" element={<NotFound />} />
+    </>
+  )
+);
