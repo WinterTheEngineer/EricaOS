@@ -17,9 +17,6 @@ class CustomUserManager(BaseUserManager):
             **extra_fields
         )
 
-        # Auto-generate username
-        user.username = user.generate_username()
-
         if password:
             user.set_password(password)
         else:

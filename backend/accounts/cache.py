@@ -15,6 +15,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     phone = PhoneNumberField(blank=True, null=True, unique=True)
 
+    # Username is required internally but auto-generated
+    username = models.CharField(max_length=150, unique=True)
+
     # Profile data
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
@@ -25,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Django-required fields
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=timezone.now)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = "email"  # User logs in with email (or phone via custom login view)
     REQUIRED_FIELDS = ["first_name", "last_name"]  # Required for createsuperuser
@@ -35,8 +38,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-    def get_full_name(self):
-        return f"{self.first_name} {self.last_name}".strip()
+    def generate_username(self):
+        """
+        Auto-generate unique username based on firstname+lastname
+        """
+        base = slugify(f"{self.first_name}-{self.last_name}") or "user"
+        username = base
+        counter = 1
 
-    def get_short_name(self):
-        return self.first_name
+        while User.objects.filter(username=username).exists():
+            counter += 1
+            username = f"{base}-{counter}"
+
+        return username

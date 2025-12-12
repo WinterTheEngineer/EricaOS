@@ -26,3 +26,34 @@ class SignupSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
         user = User.objects.create_user(password=password, **validated_data)
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    identifier = serializers.CharField()  # email or phone
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        identifier = attrs.get("identifier")
+        password = attrs.get("password")
+
+        if not identifier or not password:
+            raise serializers.ValidationError("Both identifier and password are required.")
+
+        # Attempt to fetch user by email or phone
+        try:
+            if "@" in identifier:
+                user = User.objects.get(email=identifier)
+            else:
+                user = User.objects.get(phone=identifier)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Invalid credentials.")
+
+        # Check password
+        if not user.check_password(password):
+            raise serializers.ValidationError("Invalid credentials.")
+
+        if not user.is_active:
+            raise serializers.ValidationError("User is inactive.")
+
+        attrs["user"] = user
+        return attrs
