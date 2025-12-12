@@ -9,7 +9,7 @@ function Login () {
     }, []);
 
     return (<>
-        <Form route="api/token/create" method="login" />
+        <Form route="accounts/token/create" method="login" />
     </>)
 }
 

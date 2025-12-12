@@ -2,6 +2,7 @@ import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 export default function Register() {
     // Form fields
@@ -9,6 +10,7 @@ export default function Register() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [initializedPhone, setInitializedPhone] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -89,7 +91,7 @@ export default function Register() {
         setIsSubmitting(true);
 
         try {
-            await api.post("accounts/register/", {
+            const res = await api.post("accounts/register/", {
                 first_name: firstName,
                 last_name: lastName,
                 email,
@@ -99,20 +101,27 @@ export default function Register() {
             });
 
             setSuccessMessage("Account created successfully!");
+
+            const Loginres = await api.post('accounts/token/create', {email, password})
+            
+            localStorage.setItem(ACCESS_TOKEN, Loginres.data.access)
+            localStorage.setItem(REFRESH_TOKEN, Loginres.data.refresh)
+            navigate("/")
+
             
         } catch (error) {
             if (error.response?.data) {
                 const err = error.response.data;
-
+                
                 if (err.email) setEmailError(err.email[0]);
                 if (err.phone) setPhoneError(err.phone[0]);
 
                 if (err.password) setServerError(err.password[0]);
                 else if (err.password2) setServerError(err.password2[0]);
                 else if (err.detail) setServerError(err.detail);
-                else setServerError("Something went wrong.");
+                else alert(error)
             } else {
-                setServerError("Server unavailable.");
+                alert(error)
             }
         }
 
@@ -168,8 +177,11 @@ export default function Register() {
                     <label>Phone</label>
                     <PhoneInput
                         country={"za"}
-                        value={phone}
-                        onChange={(value) => setPhone("+" + value.replace(/\D/g, ""))}
+                        value={initializedPhone ? phone : ""}
+                        onChange={(value) => {
+                            setInitializedPhone(true);
+                            setPhone("+" + value.replace(/\D/g, ""));
+                        }}
                         inputClass={phoneError ? "error" : ""}
                         specialLabel=""
                         enableAreaCodes={true}
@@ -184,6 +196,7 @@ export default function Register() {
                     <input
                         type="password"
                         required
+                        autoComplete="off"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />

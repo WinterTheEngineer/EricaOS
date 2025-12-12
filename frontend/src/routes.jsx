@@ -9,10 +9,13 @@ import AuthLayout from './Layouts/AuthLayout';
 import GuestRoute from './components/GuestRoute';
 import { Route, Navigate, createBrowserRouter, createRoutesFromElements, Routes } from "react-router-dom"
 import ProtectedRoute from './components/ProtectedRoutes';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from './constants'
 
 function Logout() {
-	localStorage.clear()
-	return <Navigate to="/login" />
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+
+    return <Navigate to="/login" />;
 }
 
 function RegisterAndLogout() {
