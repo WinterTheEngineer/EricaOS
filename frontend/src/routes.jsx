@@ -1,6 +1,7 @@
 import Notes from './pages/Notes';
 import Login from './pages/Login';
 import Lists from './pages/Lists';
+import Landing from './pages/Landing';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
@@ -26,7 +27,8 @@ function RegisterAndLogout() {
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<DashLayout />}>
+      <Route path="/" element={<GuestRoute><Landing /></GuestRoute>} />
+      <Route path="/dashboard" element={<DashLayout />}>
         <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="lists" element={<ProtectedRoute><Lists /></ProtectedRoute>} />
         <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />

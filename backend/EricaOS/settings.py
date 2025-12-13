@@ -31,6 +31,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ALLOWED_ORIGINS = [
+    "https://a54b50a20dbe.ngrok-free.app",  # your ngrok backend URL
+    "http://localhost:5173",            # your React dev URL
+    "http://localhost:8000",            # your React dev URL
+]
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
