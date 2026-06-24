@@ -4,6 +4,8 @@ from .serializers import SignupSerializer
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class SignupView(generics.CreateAPIView):
     """
@@ -28,6 +30,50 @@ class SignupView(generics.CreateAPIView):
             # Log the errors for debugging
             print("Signup serializer errors:", serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        identifier = request.data.get("identifier")
+        password = request.data.get("password")
+
+        if not identifier or not password:
+            return Response(
+                {"detail": "Identifier and password required"},
+                status=400
+            )
+
+        if "@" in identifier:
+            user = User.objects.filter(email=identifier.lower()).first()
+        else:
+            user = User.objects.filter(phone=identifier).first()
+        
+        if not user:
+            return Response(
+                {"detail": "Invalid credentials"},
+                status=401
+            )
+        if not user.is_active:
+            return Response(
+                {"detail": "User is inactive"},
+                status=403
+            )
+
+        if not user.check_password(password):
+            return Response(
+                {"detail": "Password is incorrect, try again."},
+                status=401
+            )
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
 
 
 class ValidateFieldView(APIView):
@@ -56,7 +102,5 @@ class ValidateFieldView(APIView):
             )
 
         return Response({
-            "field": field,
-            "value": value,
-            "exists": exists
+            "valid": exists
         })

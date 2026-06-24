@@ -1,39 +1,91 @@
-import '../styles/globals.css'
+import '../styles/Sidebar.css'
 import Searchbar from './Searchbar';
+import { logout } from '../utils/authService';
 import sidebarLogo from '../assets/sidebar-logo.png';
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
+import { RxExit } from "react-icons/rx";
 import { BiNote } from "react-icons/bi";
 import { FaRegDotCircle } from "react-icons/fa";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { useRef, useState } from 'react';
+import { PiUserFill } from "react-icons/pi";
+import { MdDashboard } from "react-icons/md";
+import { FaNoteSticky } from "react-icons/fa6";
+import { CiBoxList } from "react-icons/ci";
 
 function Sidebar () {
 
+    const username = null
+    const sidebarRef = useRef()
+
+    const navigate = useNavigate()
+    const [loggingOut, setLoggingOut] = useState(false)
+    const [sidebarActive, setSidebarActive] = useState(false)
+
+    const toggleSidebar = () => {
+        setSidebarActive(prev => !prev);
+    };
+
+    const handleLogout = () => {
+        setLoggingOut(true);
+        logout();
+        setTimeout(() => {
+            navigate('/')
+        }, 2000)
+    }
+
     return (<>
-        <aside id="sidebar">
-            <Link to={'/'}>
-                <img src={sidebarLogo} className='logo' alt="The Official EricaOS Logo" />
-            </Link>
-            <Searchbar />
-            <ul>
-                <li>
-                    <NavLink to="/">
-                        <BiNote className='link-icon' />
-                        Dashboard
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/notes">
-                        <BiNote className='link-icon' />
-                        Notes
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/lists">
-                        <BiNote className='link-icon' />
-                        Lists
-                    </NavLink>
-                </li>
-            </ul>
+        <aside id="sidebar" ref={sidebarRef} className={sidebarActive ? "toggled" : ""}>
+            <div className="sidebar-header">
+                <Link to={'/'} className='sidebar-logo'>
+                    <img src={sidebarLogo} alt="The Official EricaOS Logo" />
+                </Link>
+                <button
+                    type="submit"
+                    onClick={toggleSidebar}
+                    className="erica-site-btn menu-toggle"
+                >
+                    <HiMenuAlt3 />
+                </button>
+            </div>
+            <div className="sidebar-main">
+                <Searchbar />
+                <ul className='sidebar-list'>
+                    <li>
+                        <Link to="/dashboard">
+                            <MdDashboard className='link-icon' />
+                            Dashboard
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/dashboard/notes">
+                            <FaNoteSticky className='link-icon' />
+                            Notes
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/dashboard/lists">
+                            <CiBoxList className='link-icon' />
+                            Lists
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            <div className="sidebar-footer">
+                <button className="erica-site-btn user-toggle">
+                    <span className="user-icon">
+                        <PiUserFill />
+                    </span>
+                    {username ? username : "Anonymous"}
+                </button>
+                <button
+                    onClick={handleLogout}
+                    className="erica-site-btn user-logout"
+                >
+                    {loggingOut ? "Logging Out..." : <RxExit />}
+                </button>
+            </div>
         </aside>
     </>)
 }

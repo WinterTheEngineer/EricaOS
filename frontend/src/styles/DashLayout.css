@@ -2,85 +2,56 @@
     --global-border-radius: .25rem
 }
 
-#root {
-    gap: 1rem;
+#root.dash-layout {
 	width: 100vw;
 	height: 100vh;
 	display: flex;
-	padding: 1rem;
     align-items: center;
     flex-direction: column;
 }
 
-#sidebar, 
-main {
-	padding: 1rem;
-	border: 1px solid #00000020;
-	border-radius: var(--global-border-radius);
-	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+#root.dash-layout #sidebar, 
+#root.dash-layout main {
+	/* border-radius: var(--global-border-radius); */
+	/* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
 }
 
-#sidebar {
-  	width: 16rem;
+#root.dash-layout #sidebar {
 }
 
-#sidebar .logo {
-	width: 60%;
-	margin: 0 auto;
-}
-
-#sidebar ul {
-	gap: .25rem;
+#root.dash-layout main header{
+	height: 4rem;
 	display: flex;
-	list-style: none;
-	flex-direction: column;
-}
-
-#sidebar ul li a {
-	gap: .5rem;
-	opacity: .5;
-	display: flex;
-	font-size: .8rem;
-	font-weight: 600;
-	position: relative;
+	padding: 0 .5rem;
 	align-items: center;
-	padding: .5rem .75rem;
-	border-radius: var(--global-border-radius);
-	transition: .3s ease background-color,
-				.3s ease opacity;
+	background-color: #ffffff;
 }
 
-#sidebar ul li a:hover {
-	opacity: 1;
-	background-color: #00000015;
-}
-
-#sidebar ul li a.active {
-	opacity: 1;
-	background-color: #00000020;
-}
-
-#sidebar ul li a.active::before {
-	top: 50%;
-	left: 0;
-	content: '';
-	width: .2rem;
-	height: 60%;
-	position: absolute;
-	background-color: #712a92;
-	transform: translateY(-50%);
-	border-radius: 0 5px 5px 0;
-}
-
-#sidebar ul li a .link-icon {
-	font-size: 1.2rem;
-}
-
-main {
+#root.dash-layout main {
 	flex: 1;
+	width: 100%;
+	background-color: var(--backdrop-grey);
 }
 
-.content-container {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+@media screen and (min-width: 1240px) {
+	#root.dash-layout {
+		padding: .5rem;
+		flex-direction: row;
+	}
+	
+	#root.dash-layout #sidebar {
+		border: 2px solid var(--backdrop-grey);
+	}
+	
+	#root.dash-layout main {
+		height: 100%;
+		border-right: 2px solid var(--backdrop-grey);
+		border-block: 2px solid var(--backdrop-grey);
+	}
+
+	#root.dash-layout main header{
+		height: 4rem;
+		display: flex;
+		padding: 0 1rem;
+	}
 }

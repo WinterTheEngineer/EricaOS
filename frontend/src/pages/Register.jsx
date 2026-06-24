@@ -1,4 +1,13 @@
-import { useState } from "react";
+import '../styles/form.css'
+import { Link } from 'react-router-dom';
+import { register } from '../utils/authService';
+import { useEffect, useState } from 'react';
+import { debounce, validateField } from '../utils/validators';
+import sidebarLogo from '../assets/sidebar-logo.png';
+
+import { LuEye } from "react-icons/lu";
+import { LuEyeOff } from "react-icons/lu";
+
 import PhoneInput from "react-phone-input-2";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
@@ -10,229 +19,258 @@ export default function Register() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
-    const [initializedPhone, setInitializedPhone] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
+    
     // Validation errors
+    const [privacy, setPrivacy] = useState(true)
     const [emailError, setEmailError] = useState("");
     const [phoneError, setPhoneError] = useState("");
+    const [fieldErrors, setFieldErrors] = useState({});
 
     // Loading states
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [checkingEmail, setCheckingEmail] = useState(false);
     const [checkingPhone, setCheckingPhone] = useState(false);
-
-    // Server messages
-    const [serverError, setServerError] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [submitting, setSubmitting] = useState(false);
+    
+    const [messages, setMessages] = useState([]);
 
     const navigate = useNavigate();
 
-    let emailTimeout;
-    let phoneTimeout;
 
     /** LIVE EMAIL VALIDATION */
-    const validateEmail = (value) => {
-        setEmailError("");
-        if (!value) return;
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const isValid = emailRegex.test(value);
-        if (!isValid) return;
-
-        setCheckingEmail(true);
-
-        clearTimeout(emailTimeout);
-        emailTimeout = setTimeout(async () => {
-            try {
-                const res = await api.post("accounts/validate/email/", { value });
-                if (res.data.exists) setEmailError("Email already in use.");
-            } catch (err) {
-                setEmailError("Could not validate email.");
-            } finally {
-                setCheckingEmail(false);
-            }
-        }, 400);
-    };
-
-    /** LIVE PHONE VALIDATION */
-    const validatePhone = (value) => {
-        setPhoneError("");
-        if (!value) return;
-
-        setCheckingPhone(true);
-
-        clearTimeout(phoneTimeout);
-        phoneTimeout = setTimeout(async () => {
-            try {
-                const res = await api.post("accounts/validate/phone/", { value });
-                if (res.data.exists) setPhoneError("Phone already in use.");
-            } catch {
-                setPhoneError("Error validating phone.");
-            } finally {
-                setCheckingPhone(false);
-            }
-        }, 1000);
-    };
-
-    /** SUBMIT FORM */
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        setServerError("");
-        setSuccessMessage("");
-
-        if (password !== confirmPassword) {
-            setServerError("Passwords do not match.");
+    const validateEmail = debounce(async (value) => {
+        if (!value) {
+            setEmailError("");
+            setCheckingEmail(false);
             return;
         }
 
-        setIsSubmitting(true);
+        setCheckingEmail(true);
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(value)) {
+            setEmailError("Invalid email format");
+            setCheckingEmail(false);
+            return;
+        }
 
         try {
-            const res = await api.post("accounts/register/", {
-                first_name: firstName,
-                last_name: lastName,
+            const exists = await validateField(
+                "/accounts/validate/email/",
+                value
+            );
+
+            if (exists) {
+                setEmailError("Email already in use.");
+            } else {
+                setEmailError("");
+            }
+
+        } catch {
+            setEmailError("Could not validate email.");
+        } finally {
+            setCheckingEmail(false);
+        }
+    }, 400);
+
+    /** LIVE PHONE VALIDATION */
+    const validatePhone = debounce(async (value) => {
+        if (!value) {
+            setPhoneError("");
+            setCheckingPhone(false);
+            return;
+        }
+
+        if (value.length < 10) {
+            setPhoneError("");
+            setCheckingPhone(false);
+            return;
+        }
+
+        setCheckingPhone(true);
+
+        try {
+            const exists = await validateField(
+                "/accounts/validate/phone/",
+                value
+            );
+
+            if (exists) {
+                setPhoneError("This phone number is already in use.");
+            } else {
+                setPhoneError("");
+            }
+
+        } catch {
+            setPhoneError("Could not validate phone.");
+        } finally {
+            setCheckingPhone(false);
+        }
+    }, 400);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+
+        try {
+            await register({
+                firstName,
+                lastName,
                 email,
                 phone,
                 password,
-                password2: confirmPassword, // REQUIRED for Django
+                confirmPassword
             });
 
-            setSuccessMessage("Account created successfully!");
+            setMessages("Account created successfully! Signing in...");
 
-            const Loginres = await api.post('accounts/token/create', {email, password})
-            
-            localStorage.setItem(ACCESS_TOKEN, Loginres.data.access)
-            localStorage.setItem(REFRESH_TOKEN, Loginres.data.refresh)
-            navigate("/")
+            await login({
+                identifier: email,
+                password
+            });
 
-            
+            navigate("/dashboard");
+
         } catch (error) {
-            if (error.response?.data) {
-                const err = error.response.data;
-                
-                if (err.email) setEmailError(err.email[0]);
-                if (err.phone) setPhoneError(err.phone[0]);
+            const err = error.response?.data;
 
-                if (err.password) setServerError(err.password[0]);
-                else if (err.password2) setServerError(err.password2[0]);
-                else if (err.detail) setServerError(err.detail);
-                else alert(error)
-            } else {
-                alert(error)
-            }
+            if (err?.email) setEmailError(err.email[0]);
+            if (err?.phone) setPhoneError(err.phone[0]);
+
+            setFieldErrors(prev => ({
+                ...prev,
+                password: err?.password?.[0],
+                password2: err?.password2?.[0],
+                detail: err?.detail
+            }));
+
+            if (!err) alert(error);
+
+        } finally {
+            setSubmitting(false);
         }
-
-        setIsSubmitting(false);
     };
 
     return (
-        <div className="form-container">
-            <h2>SIGN UP</h2>
+        <>
+            <form onSubmit={handleSubmit} className="erica-form" id="register">
 
-            <form onSubmit={handleSubmit}>
-                
-                {/* FIRST NAME */}
+                <div className="form-header">
+                    <img src={sidebarLogo} alt="Erica Logo" className="logo" />
+                    <h1 className="erica-site-heading">Create Account</h1>
+                </div>
+
                 <div className="form-block">
-                    <label>First Name</label>
-                    <input
-                        type="text"
-                        required
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
+
+                    <div className="form-input">
+                        <input
+                            type="text"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            placeholder="first name"
+                        />
+                    </div>
+
+                    <div className="form-input">
+                        <input
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            placeholder="last name"
+                        />
+                    </div>
+
+                    <div className="form-input">
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                validateEmail(e.target.value);
+                            }}
+                            placeholder="email address"
+                        />
+
+                        {emailError && (
+                            <small className="field-error">
+                                {emailError}
+                            </small>
+                        )}
+                    </div>
+
+                    <div className="form-input">
+                        <input
+                            type="text"
+                            value={phone}
+                            onChange={(e) => {
+                                setPhone(e.target.value);
+                                validatePhone(e.target.value);
+                            }}
+                            placeholder="phone number (optional)"
+                        />
+
+                        {phoneError && (
+                            <small className="field-error">
+                                {phoneError}
+                            </small>
+                        )}
+                    </div>
+
+                    <div className="form-input">
+                        <input
+                            type={privacy ? "password" : "text"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="password"
+                        />
+
+                        <button
+                            type="button"
+                            onClick={() => setPrivacy(prev => !prev)}
+                            className={`toggle-privacy ${privacy ? "" : "toggled"}`}
+                        >
+                            {privacy ? <LuEyeOff /> : <LuEye />}
+                        </button>
+                    </div>
+
+                    <div className="form-input">
+                        <input
+                            type={privacy ? "password" : "text"}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="confirm password"
+                        />
+
+                        <button
+                            type="button"
+                            onClick={() => setPrivacy(prev => !prev)}
+                            className={`toggle-privacy ${privacy ? "" : "toggled"}`}
+                        >
+                            {privacy ? <LuEyeOff /> : <LuEye />}
+                        </button>
+                    </div>
                 </div>
 
-                {/* LAST NAME */}
-                <div className="form-block">
-                    <label>Last Name</label>
-                    <input
-                        type="text"
-                        required
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                </div>
+                {fieldErrors?.detail && (
+                    <small className="field-error">
+                        {fieldErrors.detail}
+                    </small>
+                )}
 
-                {/* EMAIL */}
-                <div className="form-block">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        required
-                        value={email}
-                        className={emailError ? "error" : ""}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                            validateEmail(e.target.value);
-                        }}
-                    />
-                    {emailError && <small className="error-message">{emailError}</small>}
-                </div>
+                <button
+                    type="submit"
+                    disabled={submitting || checkingEmail || checkingPhone}
+                    className="erica-site-btn primary submit"
+                >
+                    {submitting ? "Creating Account..." : "Create Account"}
+                </button>
 
-                {/* PHONE */}
-                <div className="form-block">
-                    <label>Phone</label>
-                    <PhoneInput
-                        country={"za"}
-                        value={initializedPhone ? phone : ""}
-                        onChange={(value) => {
-                            setInitializedPhone(true);
-                            setPhone("+" + value.replace(/\D/g, ""));
-                        }}
-                        inputClass={phoneError ? "error" : ""}
-                        specialLabel=""
-                        enableAreaCodes={true}
-                        placeholder="optional..."
-                    />
-                    {phoneError && <small className="error-message">{phoneError}</small>}
-                </div>
-
-                {/* PASSWORD */}
-                <div className="form-block">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        required
-                        autoComplete="off"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-
-                {/* CONFIRM PASSWORD */}
-                <div className="form-block">
-                    <label>Confirm Password</label>
-                    <input
-                        type="password"
-                        required
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                </div>
-
-                {/* SUBMIT */}
-                <div className="form-block submit-block">
-                    <button
-                        type="submit"
-                        disabled={
-                            isSubmitting ||
-                            checkingEmail ||
-                            checkingPhone ||
-                            emailError ||
-                            phoneError
-                        }
-                    >
-                        {isSubmitting ? "Creating..." : "Create Account"}
-                    </button>
-                </div>
-
-                {/* SERVER FEEDBACK */}
-                {serverError && <p className="error">{serverError}</p>}
-                {successMessage && <p className="success">{successMessage}</p>}
             </form>
-        </div>
+            <Link to={'/login'} className='erica-site-link'>
+                Already have an account? <span>Sign In</span>
+            </Link>
+        </>
     );
 }

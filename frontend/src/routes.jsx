@@ -1,4 +1,5 @@
 import Notes from './pages/Notes';
+import Test from './components/Test';
 import Login from './pages/Login';
 import Lists from './pages/Lists';
 import Landing from './pages/Landing';
@@ -8,39 +9,34 @@ import Dashboard from './pages/Dashboard';
 import DashLayout from './Layouts/DashLayout';
 import AuthLayout from './Layouts/AuthLayout';
 import GuestRoute from './components/GuestRoute';
-import { Route, Navigate, createBrowserRouter, createRoutesFromElements, Routes } from "react-router-dom"
 import ProtectedRoute from './components/ProtectedRoutes';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from './constants'
+import { logout } from './utils/authService';
+import { Route, Navigate, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 function Logout() {
-    localStorage.removeItem(ACCESS_TOKEN);
-    localStorage.removeItem(REFRESH_TOKEN);
-
+    logout();
     return <Navigate to="/login" />;
 }
 
-function RegisterAndLogout() {
-	localStorage.clear()
-	return <Register />
-}
-
 export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      <Route path="/" element={<GuestRoute><Landing /></GuestRoute>} />
-      <Route path="/dashboard" element={<DashLayout />}>
-        <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="lists" element={<ProtectedRoute><Lists /></ProtectedRoute>} />
-        <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
-      </Route>
+    createRoutesFromElements(
+        <>
+            <Route path="/" element={<GuestRoute><Landing /></GuestRoute>} />
 
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-        <Route path="/register" element={<GuestRoute><RegisterAndLogout /></GuestRoute>} />
-      </Route>
+            <Route path="/dashboard" element={<DashLayout />}>
+                <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="lists" element={<ProtectedRoute><Lists /></ProtectedRoute>} />
+                <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
+            </Route>
 
-      <Route path="/logout" element={<Logout />} />
-      <Route path="*" element={<NotFound />} />
-    </>
-  )
+            <Route element={<AuthLayout />}>
+                <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+                <Route path="/sign-up" element={<GuestRoute><Register /></GuestRoute>} />
+            </Route>
+
+            <Route path="/test" element={<Test />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="*" element={<NotFound />} />
+        </>
+    )
 );

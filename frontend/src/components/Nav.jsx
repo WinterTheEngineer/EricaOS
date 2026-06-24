@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import logo from '../assets/sidebar-logo.png';
 import { RiMenu3Fill } from "react-icons/ri";
 
+import { Link } from 'react-router-dom';
+
 function Nav () {
 
     const toggleMobileMenu = () => {
@@ -34,8 +36,8 @@ function Nav () {
                     <li>Contact</li>
                 </ul>
                 <div className="nav-actions">
-                    <a href="http://" className='sign-in'>Sign in</a>
-                    <a href="http://" className='sign-up'>Sign Up</a>
+                    <Link to="/login" href="http://" className='sign-in'>Sign in</Link>
+                    <Link to="/register" href="http://" className='sign-up'>Sign Up</Link>
                 </div>
                 <button
                     id='nav-toggle'

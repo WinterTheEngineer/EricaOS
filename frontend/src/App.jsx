@@ -1,3 +1,4 @@
+import './styles/globals.css'
 import { router } from "./routes"
 import { RouterProvider } from "react-router-dom"
 

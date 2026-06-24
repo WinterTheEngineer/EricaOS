@@ -66,26 +66,26 @@ html{
     border-radius: .25rem;
 }
 
-header .content {
+#landing header .content {
     padding: 2rem 0;
 }
 
-header .site-header {
+#landing header .site-header {
     font-weight: 600;
     text-align: center;
 }
 
-header .site-header span {
+#landing header .site-header span {
     color: var(--magenta);
 }
 
-header .site-p {
+#landing header .site-p {
     width: 70%;
     margin: 1.5rem auto;
     text-align: center;
 }
 
-header .site-btn {
+#landing header .site-btn {
     display: flex;
     width: 15rem;
     color: #ffffff;
@@ -95,7 +95,7 @@ header .site-btn {
     background: #00000060;
 }
 
-header .site-btn::after {
+#landing header .site-btn::after {
     top: 3px;
     right: 3px;
     width: 4rem;
@@ -108,11 +108,11 @@ header .site-btn::after {
     background: #000000;
 }
 
-header .graphic,
-header .graphic img {
+#landing header .graphic,
+#landing header .graphic img {
     width: 100%;
 }
 
-header .graphic img.desktop {
+#landing header .graphic img.desktop {
     display: none;
 }

@@ -1,6 +1,6 @@
 import api from '../api';
-import '../styles/Searchbar.css';
 import { useState } from 'react';
+import '../styles/Searchbar.css'
 
 import { IoSearch } from "react-icons/io5";
 

@@ -1,18 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root {
+	--border-grey: #cccccc;
+	--backdrop-grey: #f5f5f5;
+	--erica-fuschia: #AC00C7;
 	--global-border-radius: .25rem
-}
-
-#root {
-	min-height: 100vh;
 }
 
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Geist', 'Inter';
+	font-family: 'Geist Mono', 'Inter';
 	-webkit-font-smoothing: antialiased;
   	-moz-osx-font-smoothing: grayscale;
 }
@@ -22,6 +22,59 @@ a {
 	text-decoration: none;
 }
 
-.site-header {
+.erica-site-heading {
 	font-weight: 500;
+}
+
+.erica-form {
+	gap: 1rem;
+	display: flex;
+	padding: 1rem;
+	flex-direction: column;
+}
+
+.erica-site-btn {
+	border: none;
+	display: grid;
+	padding: .5rem;
+	cursor: pointer;
+	place-items: center;
+	border-radius: var(--global-border-radius);
+}
+
+.erica-site-btn.primary{
+	color: #ffffff;
+	background-color: var(--erica-fuschia);
+}
+
+.erica-site-link {
+	cursor: pointer;
+	color: #000000;
+	font-size: .9rem;
+	position: relative;
+}
+
+.erica-site-link::after {
+	left: 0;
+	width: 100%;
+	height: 1px;
+	bottom: .2rem;
+	position: absolute;
+	background-color: #AC00C7;
+	transition: .3s ease transform;
+}
+
+.erica-site-link:hover::after {
+	left: 50%;
+	bottom: .2rem;
+	transition: .3s ease transform;
+}
+
+.erica-site-link span {
+	color: var(--erica-fuschia);
+}
+
+.erica-subtext {
+	opacity: .5;
+	font-size: .75rem;
 }
