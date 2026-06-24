@@ -1,4 +1,4 @@
-import '../styles/form.css'
+import '../styles/Form.css'
 import { login } from '../utils/authService';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
