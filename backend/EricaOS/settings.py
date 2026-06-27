@@ -36,7 +36,7 @@ ALLOWED_HOSTS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "erica-os-eight.vercel.app"
+    "https://erica-os-eight.vercel.app"
 ]
 
 REST_FRAMEWORK = {
