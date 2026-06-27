@@ -31,12 +31,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '.onrender.com',
+]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://a54b50a20dbe.ngrok-free.app",  # your ngrok backend URL
-    "http://localhost:5173",            # your React dev URL
-    "http://localhost:8000",            # your React dev URL
+    "erica-os-eight.vercel.app"
 ]
 
 REST_FRAMEWORK = {
