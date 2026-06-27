@@ -1,4 +1,4 @@
-import '../styles/dashlayout.css'
+import '../styles/DashLayout.css'
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { useRef, useEffect } from "react";
