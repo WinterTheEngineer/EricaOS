@@ -1,4 +1,4 @@
-import '../styles/lists.css'
+import '../styles/Lists.css'
 import api from '../api';
 import { useRef, useEffect, useState } from "react";
 
