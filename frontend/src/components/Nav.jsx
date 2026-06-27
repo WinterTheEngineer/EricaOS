@@ -37,7 +37,7 @@ function Nav () {
                 </ul>
                 <div className="nav-actions">
                     <Link to="/login" href="http://" className='sign-in'>Sign in</Link>
-                    <Link to="/register" href="http://" className='sign-up'>Sign Up</Link>
+                    <Link to="/sign-up" href="http://" className='sign-up'>Sign Up</Link>
                 </div>
                 <button
                     id='nav-toggle'
