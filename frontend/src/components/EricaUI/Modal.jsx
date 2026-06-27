@@ -1,5 +1,5 @@
 import '../../styles/modal.css'
-import '../../styles/form.css'
+import '../../styles/Form.css'
 import { IoMdClose } from "react-icons/io";
 import sidebarLogo from "../../assets/sidebar-logo.png";
 
