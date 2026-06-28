@@ -33,9 +33,11 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = [
     '.onrender.com',
+    '192.168.18.68'
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    'localhost'
     "https://erica-os-eight.vercel.app"
 ]
 
