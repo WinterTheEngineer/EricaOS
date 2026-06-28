@@ -10,7 +10,7 @@ function Landing() {
     useEffect(() => {
         const checkHeartbeat = async () => {
             try {
-                await api.get("/api/heartbeat/");
+                const res = await api.get("/api/heartbeat/");
             } catch (err) {
                 console.error("Heartbeat failed:", err);
             }
