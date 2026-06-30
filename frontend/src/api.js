@@ -35,9 +35,11 @@ api.interceptors.response.use(
             if (!refreshToken) {
                 return Promise.reject(error);
             }
+            
+            let res;
 
             try {
-                const res = await api.post("/accounts/token/refresh/", {
+                res = await api.post("/accounts/token/refresh/", {
                     refresh: refreshToken
                 });
             } catch {
