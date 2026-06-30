@@ -18,19 +18,16 @@ export default function Register() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     
     // Validation errors
     const [privacy, setPrivacy] = useState(true)
     const [emailError, setEmailError] = useState("");
-    const [phoneError, setPhoneError] = useState("");
     const [fieldErrors, setFieldErrors] = useState({});
 
     // Loading states
     const [checkingEmail, setCheckingEmail] = useState(false);
-    const [checkingPhone, setCheckingPhone] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     
     const [messages, setMessages] = useState([]);
@@ -75,41 +72,6 @@ export default function Register() {
         }
     }, 400);
 
-    /** LIVE PHONE VALIDATION */
-    const validatePhone = debounce(async (value) => {
-        if (!value) {
-            setPhoneError("");
-            setCheckingPhone(false);
-            return;
-        }
-
-        if (value.length < 10) {
-            setPhoneError("");
-            setCheckingPhone(false);
-            return;
-        }
-
-        setCheckingPhone(true);
-
-        try {
-            const exists = await validateField(
-                "/accounts/validate/phone/",
-                value
-            );
-
-            if (exists) {
-                setPhoneError("This phone number is already in use.");
-            } else {
-                setPhoneError("");
-            }
-
-        } catch {
-            setPhoneError("Could not validate phone.");
-        } finally {
-            setCheckingPhone(false);
-        }
-    }, 400);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
@@ -119,7 +81,6 @@ export default function Register() {
                 firstName,
                 lastName,
                 email,
-                phone,
                 password,
                 confirmPassword
             });
@@ -127,7 +88,7 @@ export default function Register() {
             setMessages("Account created successfully! Signing in...");
 
             await login({
-                identifier: email,
+                email,
                 password
             });
 
@@ -196,24 +157,6 @@ export default function Register() {
                         {emailError && (
                             <small className="field-error">
                                 {emailError}
-                            </small>
-                        )}
-                    </div>
-
-                    <div className="form-input">
-                        <input
-                            type="text"
-                            value={phone}
-                            onChange={(e) => {
-                                setPhone(e.target.value);
-                                validatePhone(e.target.value);
-                            }}
-                            placeholder="phone number (optional)"
-                        />
-
-                        {phoneError && (
-                            <small className="field-error">
-                                {phoneError}
                             </small>
                         )}
                     </div>

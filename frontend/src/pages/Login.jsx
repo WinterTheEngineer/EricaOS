@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 
 function Login() {
     const [loading, setLoading] = useState(false);
-    const [identifier, setIdentifier] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [privacy, setPrivacy] = useState(true)
 
@@ -30,7 +30,8 @@ function Login() {
         setLoading(true);
 
         try {
-            await login({ identifier, password });
+            console.log(email, password)
+            await login({ email, password });
             navigate("/dashboard")
         } catch (err) {
             console.error(err);
@@ -50,10 +51,10 @@ function Login() {
 
                 <div className="form-input">
                     <input
-                        type="text"
-                        value={identifier}
-                        onChange={(e) => setIdentifier(e.target.value)}
-                        placeholder="email or phone number"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email Address"
                     />
                 </div>
                 <div className="form-input">
