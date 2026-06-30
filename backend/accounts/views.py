@@ -1,12 +1,17 @@
 from .models import User
-from rest_framework.views import APIView
 from .serializers import SignupSerializer
+
+from rest_framework.views import APIView
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenObtainPairView
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
+# -------------------------
+# SIGNUP
+# -------------------------
 class SignupView(generics.CreateAPIView):
     """
     Handles user registration.
@@ -19,68 +24,77 @@ class SignupView(generics.CreateAPIView):
 
         if serializer.is_valid():
             user = serializer.save()
+
             return Response({
                 "id": str(user.id),
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
-                "phone": str(user.phone) if user.phone else None
             }, status=status.HTTP_201_CREATED)
-        else:
-            # Log the errors for debugging
-            print("Signup serializer errors:", serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class MyTokenObtainPairView(TokenObtainPairView):
-
+# -------------------------
+# LOGIN (JWT)
+# -------------------------
+class MyTokenObtainPairView(APIView):
+    """
+    Custom email/password JWT login.
+    """
     permission_classes = [AllowAny]
 
-    def post(self, request, *args, **kwargs):
-        identifier = request.data.get("identifier")
+    def post(self, request):
+        email = request.data.get("email")
         password = request.data.get("password")
 
-        if not identifier or not password:
+        if not email or not password:
             return Response(
-                {"detail": "Identifier and password required"},
-                status=400
+                {"detail": "email and password required"},
+                status=status.HTTP_400_BAD_REQUEST
             )
 
-        if "@" in identifier:
-            user = User.objects.filter(email=identifier.lower()).first()
-        else:
-            user = User.objects.filter(phone=identifier).first()
-        
-        if not user:
+        email = email.lower().strip()
+
+        user = User.objects.filter(email=email).first()
+
+        if user is None:
             return Response(
                 {"detail": "Invalid credentials"},
-                status=401
+                status=status.HTTP_401_UNAUTHORIZED
             )
+
         if not user.is_active:
             return Response(
                 {"detail": "User is inactive"},
-                status=403
+                status=status.HTTP_403_FORBIDDEN
             )
 
         if not user.check_password(password):
             return Response(
-                {"detail": "Password is incorrect, try again."},
-                status=401
+                {"detail": "Invalid credentials"},
+                status=status.HTTP_401_UNAUTHORIZED
             )
 
         refresh = RefreshToken.for_user(user)
 
         return Response({
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        })
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }, status=status.HTTP_200_OK)
 
 
+# -------------------------
+# FIELD VALIDATION (EMAIL ONLY)
+# -------------------------
 class ValidateFieldView(APIView):
+    """
+    Checks whether a user email already exists.
+    """
     permission_classes = [AllowAny]
 
     def post(self, request, field):
-        value = request.data.get("value", "").strip()
+        value = request.data.get("value", "").strip().lower()
 
         if not value:
             return Response(
@@ -88,19 +102,15 @@ class ValidateFieldView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Select field
-        if field == "email":
-            exists = User.objects.filter(email=value).exists()
-
-        elif field == "phone":
-            exists = User.objects.filter(phone=value).exists()
-
-        else:
+        if field != "email":
             return Response(
-                {"detail": "Invalid field."},
+                {"detail": "Unsupported field."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        exists = User.objects.filter(email=value).exists()
+
         return Response({
-            "valid": exists
-        })
+            "exists": exists,
+            "available": not exists
+        }, status=status.HTTP_200_OK)

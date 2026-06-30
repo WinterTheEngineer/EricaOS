@@ -13,14 +13,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # Core identity
     email = models.EmailField(unique=True)
-    phone = PhoneNumberField(blank=True, null=True, unique=True)
 
     # Profile data
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
 
     # OAuth
-    google_id = models.CharField(max_length=255, unique=True, blank=True, null=True)
 
     # Django-required fields
     is_active = models.BooleanField(default=True)

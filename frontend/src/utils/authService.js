@@ -1,9 +1,9 @@
 import api from "../api"
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants"
 
-export const login = async({identifier, password}) => {
+export const login = async({email, password}) => {
     
-    const res = await api.post("/accounts/token/", {identifier, password})
+    const res = await api.post("/accounts/token/", {email, password})
     
     localStorage.setItem(ACCESS_TOKEN, res.data.access)
     localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
