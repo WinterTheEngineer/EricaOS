@@ -30,7 +30,6 @@ function Login() {
         setLoading(true);
 
         try {
-            console.log(email, password)
             await login({ email, password });
             navigate("/dashboard")
         } catch (err) {

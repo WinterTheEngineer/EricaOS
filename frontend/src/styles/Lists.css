@@ -57,6 +57,7 @@ main#lists .main-content.empty .empty-container {
     top: 3rem;
     opacity: 0;
     right: 1rem;
+    z-index: 99;
     width: 15rem;
     padding: .5rem;
     list-style: none;
