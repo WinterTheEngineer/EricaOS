@@ -36,20 +36,8 @@ api.interceptors.response.use(
                 return Promise.reject(error);
             }
 
-            const decodedToken = jwtDecode(refreshToken)
-            
-            if (decodedToken.exp * 1000 < Date.now()) {
-                localStorage.removeItem(ACCESS_TOKEN)
-                localStorage.removeItem(REFRESH_TOKEN)
-
-                window.location.href = "/login";
-                return Promise.reject(error);
-            }
-            
-            let res;
-
             try {
-                res = await api.post("/accounts/token/refresh/", {
+                const res = await api.post("/accounts/token/refresh/", {
                     refresh: refreshToken
                 });
             } catch {
