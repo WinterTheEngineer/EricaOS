@@ -1,0 +1,52 @@
+.card.exchange-rate {
+    gap: 1rem;
+    padding: 1rem;
+    display: flex;
+    overflow: hidden;
+    max-height: 20rem;
+    background: #ffffff;
+    flex-direction: column;
+    border: 1px solid #e2e2e2;
+	border-radius: var(--global-border-radius);
+	box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
+
+.card.exchange-rate .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card.exchange-rate .header .erica-site-heading {
+    font-size: 2rem;
+}
+
+.card.exchange-rate .watched-currencies {
+    gap: .5rem;
+    display: flex;
+    padding: .5rem;
+    list-style: none;
+    overflow-y: scroll;
+    flex-direction: column;
+    background-color: var(--backdrop-grey);
+}
+
+.card.exchange-rate .watched-currency {
+    display: flex;
+    padding: .5rem;
+    align-items: center;
+    border-radius: .25rem;
+    background-color: #ffffff;
+    justify-content: space-between;
+}
+
+.card.exchange-rate .watched-currency .erica-site-heading {
+    gap: .25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card.exchange-rate .watched-currency .erica-site-heading span {
+    color: #b3b3b3;
+    font-size: .8rem;
+}

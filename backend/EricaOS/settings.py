@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'accounts',
     'lists',
     'notes',
+    'finance',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
