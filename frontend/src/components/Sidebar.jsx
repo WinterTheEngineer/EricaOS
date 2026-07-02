@@ -21,11 +21,8 @@ function Sidebar () {
 
     const navigate = useNavigate()
     const [loggingOut, setLoggingOut] = useState(false)
-    const [sidebarActive, setSidebarActive] = useState(false)
-
-    const toggleSidebar = () => {
-        setSidebarActive(prev => !prev);
-    };
+    const [sidebarExpanded, setSidebarExpanded] = useState(false)
+    const [sidebarDropped, setSidebarDropped] = useState(false)
 
     const handleLogout = () => {
         setLoggingOut(true);
@@ -36,7 +33,7 @@ function Sidebar () {
     }
 
     return (<>
-        <aside id="sidebar" ref={sidebarRef} className={sidebarActive ? "toggled" : ""}>
+        <aside id="sidebar" ref={sidebarRef} className={`${sidebarDropped ? "dropped" : ""} ${sidebarExpanded ? "expanded" : ''}`}>
             <div className="sidebar-container">
 
                 <div className="sidebar-header">
@@ -45,8 +42,15 @@ function Sidebar () {
                     </Link>
                     <button
                         type="submit"
-                        onClick={toggleSidebar}
-                        className="erica-site-btn menu-toggle"
+                        onClick={() => setSidebarDropped(prev => !prev)}
+                        className="erica-site-btn menu-toggle drop"
+                    >
+                        <HiMenuAlt3 />
+                    </button>
+                    <button
+                        type="submit"
+                        onClick={() => setSidebarExpanded(prev => !prev)}
+                        className="erica-site-btn menu-toggle expand"
                     >
                         <HiMenuAlt3 />
                     </button>
