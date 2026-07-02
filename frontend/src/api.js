@@ -1,65 +1,96 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL
-})
+});
 
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem(ACCESS_TOKEN);
 
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`
+        // Don't send Authorization headers to auth endpoints.
+        const authEndpoints = [
+            "/accounts/token/",
+            "/accounts/token/refresh/",
+        ];
+
+        if (authEndpoints.includes(config.url)) {
+            delete config.headers.Authorization;
+            return config;
+        }
+
+        if (token && token !== "undefined") {
+            config.headers.Authorization = `Bearer ${token}`;
+        } else {
+            delete config.headers.Authorization;
         }
 
         return config;
     },
-    (error) => {
-        return Promise.reject(error)
-    }
-)
+    (error) => Promise.reject(error)
+);
 
 api.interceptors.response.use(
     (response) => response,
 
     async (error) => {
         const originalRequest = error.config;
-        
-        if (error.response?.status === 401 && !originalRequest._retry) {
+
+        // Don't try refreshing after failed auth requests.
+        const authEndpoints = [
+            "/accounts/token/",
+            "/accounts/token/refresh/",
+        ];
+
+        if (authEndpoints.includes(originalRequest?.url)) {
+            return Promise.reject(error);
+        }
+
+        if (
+            error.response?.status === 401 &&
+            !originalRequest._retry
+        ) {
             originalRequest._retry = true;
-            
+
             const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
-            if (!refreshToken) {
-                return Promise.reject(error);
-            }
-            
-            let res;
-
-            try {
-                res = await api.post("/accounts/token/refresh/", {
-                    refresh: refreshToken
-                });
-            } catch {
-                localStorage.removeItem(ACCESS_TOKEN)
-                localStorage.removeItem(REFRESH_TOKEN)
+            if (!refreshToken || refreshToken === "undefined") {
+                localStorage.removeItem(ACCESS_TOKEN);
+                localStorage.removeItem(REFRESH_TOKEN);
 
                 window.location.href = "/login";
                 return Promise.reject(error);
             }
 
-            const newAccessToken = res.data.access;
-            localStorage.setItem(ACCESS_TOKEN, newAccessToken);
+            try {
+                const res = await api.post("/accounts/token/refresh/", {
+                    refresh: refreshToken,
+                });
 
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                const newAccessToken = res.data.access;
 
-            return api(originalRequest);
+                if (!newAccessToken || newAccessToken === "undefined") {
+                    throw new Error("Invalid access token returned.");
+                }
+
+                localStorage.setItem(ACCESS_TOKEN, newAccessToken);
+
+                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+                return api(originalRequest);
+            } catch (err) {
+                localStorage.removeItem(ACCESS_TOKEN);
+                localStorage.removeItem(REFRESH_TOKEN);
+
+                window.location.href = "/login";
+
+                return Promise.reject(err);
+            }
         }
 
         return Promise.reject(error);
     }
 );
 
-export default api
+export default api;
