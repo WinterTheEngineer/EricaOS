@@ -37,54 +37,57 @@ function Sidebar () {
 
     return (<>
         <aside id="sidebar" ref={sidebarRef} className={sidebarActive ? "toggled" : ""}>
-            <div className="sidebar-header">
-                <Link to={'/'} className='sidebar-logo'>
-                    <img src={sidebarLogo} alt="The Official EricaOS Logo" />
-                </Link>
-                <button
-                    type="submit"
-                    onClick={toggleSidebar}
-                    className="erica-site-btn menu-toggle"
-                >
-                    <HiMenuAlt3 />
-                </button>
-            </div>
-            <div className="sidebar-main">
-                <Searchbar />
-                <ul className='sidebar-list'>
-                    <li>
-                        <Link to="/dashboard">
-                            <MdDashboard className='link-icon' />
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/dashboard/notes">
-                            <FaNoteSticky className='link-icon' />
-                            Notes
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/dashboard/lists">
-                            <CiBoxList className='link-icon' />
-                            Lists
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-            <div className="sidebar-footer">
-                <button className="erica-site-btn user-toggle">
-                    <span className="user-icon">
-                        <PiUserFill />
-                    </span>
-                    {username ? username : "Anonymous"}
-                </button>
-                <button
-                    onClick={handleLogout}
-                    className="erica-site-btn user-logout"
-                >
-                    {loggingOut ? "Logging Out..." : <RxExit />}
-                </button>
+            <div className="sidebar-container">
+
+                <div className="sidebar-header">
+                    <Link to={'/'} className='sidebar-logo'>
+                        <img src={sidebarLogo} alt="The Official EricaOS Logo" />
+                    </Link>
+                    <button
+                        type="submit"
+                        onClick={toggleSidebar}
+                        className="erica-site-btn menu-toggle"
+                    >
+                        <HiMenuAlt3 />
+                    </button>
+                </div>
+                <div className="sidebar-main">
+                    <Searchbar />
+                    <ul className='sidebar-list'>
+                        <li>
+                            <Link to="/dashboard">
+                                <MdDashboard className='link-icon' />
+                                Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/dashboard/notes">
+                                <FaNoteSticky className='link-icon' />
+                                Notes
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/dashboard/lists">
+                                <CiBoxList className='link-icon' />
+                                Lists
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+                <div className="sidebar-footer">
+                    <button className="erica-site-btn user-toggle">
+                        <span className="user-icon">
+                            <PiUserFill />
+                        </span>
+                        {username ? username : "Anonymous"}
+                    </button>
+                    <button
+                        onClick={handleLogout}
+                        className="erica-site-btn user-logout"
+                    >
+                        {loggingOut ? "Logging Out..." : <RxExit />}
+                    </button>
+                </div>
             </div>
         </aside>
     </>)

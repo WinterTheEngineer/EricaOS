@@ -29,7 +29,7 @@ function ExchangeRateCard() {
                     </div>
                     <ul className="watched-currencies">
                         {rates.rates.map((pairing, index) => (
-                            <li className="watched-currency">
+                            <li className="watched-currency" key={index}>
                                 <h3 className="erica-site-heading">
                                     {pairing.code}
                                     <span>{pairing.name}</span>

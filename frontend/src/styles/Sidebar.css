@@ -1,16 +1,33 @@
 #sidebar {
 	width: 100%;
 	height: 4rem;
-	display: flex;
 	overflow: hidden;
-	flex-direction: column;
+	position: relative;
 	transition: .3s ease height;
 }
 
+.sidebar-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: #ffffff;
+}
+
 #sidebar.toggled {
-	gap: 1rem;
-	height: 60vh;
+	overflow: visible;
+}
+
+#sidebar.toggled .sidebar-container {
+	height: 90vh;
 	transition: .3s ease height;
+}
+
+#sidebar:not(.toggled) .sidebar-main,
+#sidebar:not(.toggled) .sidebar-footer {
+    opacity: 0;
+	display: none;
+	/* visibility: hidden; */
 }
 
 .sidebar-header {

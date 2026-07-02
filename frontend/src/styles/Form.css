@@ -18,6 +18,31 @@
 	border-radius: var(--global-border-radius);
 }
 
+.manual-login {
+	gap: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.oauth-login {
+	gap: .5rem;
+	display: flex;
+	align-items: center;
+}
+
+.oauth-login .erica-site-btn {
+	gap: .5rem;
+	display: flex;
+	color: #000;
+	align-items: center;
+	justify-content: center;
+}
+
+.oauth-login .erica-site-btn svg {
+	font-size: 1.2rem;
+	color: #000;
+}
+
 #register.erica-form .form-block {
 	gap: .5rem;
 	display: grid;
@@ -70,6 +95,34 @@
 	cursor: pointer;
 }
 
+.erica-form .separator {
+	text-align: center;
+	/* padding: .5rem 0; */
+	position: relative;
+}
+
+.erica-form .separator::before {
+	left: 0;
+	top: 50%;
+	width: 45%;
+	height: 1px;
+	content: '';
+	position: absolute;
+	background-color: #ccc;
+	transform: translateY(-50%);
+}
+
+.erica-form .separator::after {
+	top: 50%;
+	right: 0;
+	width: 45%;
+	height: 1px;
+	content: '';
+	position: absolute;
+	background-color: #ccc;
+	transform: translateY(-50%);
+}
+
 .erica-form .toggle-privacy.toggled {
 	color: var(--erica-fuschia);
 }
@@ -88,6 +141,30 @@
 
 .form-button:hover {
 	opacity: .9rem;
+}
+
+@media screen and (min-width: 720px) {
+		
+	.erica-form {
+		width: 40rem;
+	}
+	
+	.erica-form .erica-site-heading {
+		font-size: 5vw;
+	}
+
+}
+
+@media screen and (min-width: 960px) {
+		
+	.erica-form {
+		width: 30rem;
+	}
+	
+	.erica-form .erica-site-heading {
+		font-size: 3vw;
+	}
+
 }
 
 @media screen and (min-width: 1240px) {

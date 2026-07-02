@@ -1,5 +1,13 @@
 main#dashboard .main-content {
-    display: grid;
-    padding: 1rem;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: flex;
+    padding: .5rem;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 1240px) {
+    
+    main#dashboard .main-content {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }
