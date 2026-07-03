@@ -6,9 +6,8 @@ import sidebarLogo from '../assets/sidebar-logo.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import { RxExit } from "react-icons/rx";
-import { BiNote } from "react-icons/bi";
+import { BiNote, BiMenuAltRight } from "react-icons/bi";
 import { FaRegDotCircle } from "react-icons/fa";
-import { HiMenuAlt3 } from "react-icons/hi";
 import { useEffect, useRef, useState } from 'react';
 import { PiUserFill } from "react-icons/pi";
 import { MdDashboard } from "react-icons/md";
@@ -52,14 +51,14 @@ function Sidebar ({profile}) {
                         onClick={() => setSidebarDropped(prev => !prev)}
                         className="erica-site-btn menu-toggle drop"
                     >
-                        <HiMenuAlt3 />
+                        <BiMenuAltRight />
                     </button>
                     <button
                         type="submit"
                         onClick={() => setSidebarExpanded(prev => !prev)}
                         className="erica-site-btn menu-toggle expand"
                     >
-                        <HiMenuAlt3 />
+                        <BiMenuAltRight />
                     </button>
                 </div>
                 <div className="sidebar-main">
@@ -73,14 +72,14 @@ function Sidebar ({profile}) {
                                 Dashboard
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link
                                 onClick={sidebarOnClose}
                                 to="/dashboard/notes">
                                 <FaNoteSticky className='link-icon' />
                                 Notes
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link
                                 onClick={sidebarOnClose}
