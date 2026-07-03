@@ -1,12 +1,13 @@
 import '../styles/DashLayout.css'
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Slide, ToastContainer } from 'react-toastify'
 
 function DashLayout () {
 
     const mainRef = useRef();
+    const [profile, setProfile] = useState({})
     
     useEffect(() => {
         const parentElement = mainRef.current?.parentElement;
@@ -17,10 +18,25 @@ function DashLayout () {
         }
     }, []);
 
+    useEffect(() => {
+        const getDisplayProfile = async () => {
+            try {
+                const res = await api.get("/accounts/display-profile/");
+                console.log(res.data);
+
+                setProfile(res.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        getDisplayProfile()
+    }, [])
+
     return (<>
-        <Sidebar />
+        <Sidebar profile={profile} />
         <main ref={mainRef}>
-            <Outlet />
+            <Outlet context={profile} />
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}

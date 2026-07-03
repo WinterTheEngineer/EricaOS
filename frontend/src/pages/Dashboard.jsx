@@ -1,10 +1,14 @@
 import '../styles/dashboard.css'
 import { useEffect, useRef } from "react";
 import ExchangeRateCard from '../components/ExchangeRateCard';
+import { useOutletContext } from 'react-router-dom';
 
 function Dashboard() {
 
     const mainRef = useRef()
+    const profile = useOutletContext()
+
+    const username = profile.short_name
     
     useEffect(() => {
         document.title = "Dashboard - EricaOS";
@@ -21,7 +25,7 @@ function Dashboard() {
     return (
         <>
             <header ref={mainRef}>
-                <h3 className="site-heading">Dashboard</h3>
+                <h3 className="site-heading">Welcome back, {username}</h3>
             </header>
             <div className="main-content">
                 <ExchangeRateCard />

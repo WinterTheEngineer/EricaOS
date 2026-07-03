@@ -15,10 +15,10 @@ import { MdDashboard } from "react-icons/md";
 import { FaNoteSticky } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
 
-function Sidebar () {
+function Sidebar ({profile}) {
 
-    const [username, setUsername] = useState("Anonymous")
-    const [avatar, setAvatar] = useState('')
+    const username = profile.short_name
+    const avatar = profile.avatar
     
     const sidebarRef = useRef()
 
@@ -34,25 +34,6 @@ function Sidebar () {
             navigate('/')
         }, 2000)
     }
-
-    useEffect(() => {
-        const getDisplayProfile = async () => {
-            try {
-                const res = await api.get("/accounts/display-profile/");
-                console.log(res.data);
-
-                setUsername(res.data.short_name);
-
-                if (res.data.avatar) {
-                    setAvatar(res.data.avatar);
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        getDisplayProfile()
-    }, [])
 
     return (<>
         <aside id="sidebar" ref={sidebarRef} className={`${sidebarDropped ? "dropped" : ""} ${sidebarExpanded ? "expanded" : ''}`}>
