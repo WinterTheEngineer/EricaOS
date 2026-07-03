@@ -85,6 +85,10 @@ a {
 
 @keyframes skeletonLoader {
 	0% {
+		background-color: #a229da1f;
+	}
+
+	50% {
 		background-color: transparent;
 	}
 
