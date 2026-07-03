@@ -134,6 +134,7 @@
 	width: 2rem;
 	height: 2rem;
 	display: grid;
+	overflow: hidden;
 	border-radius: 50%;
 	place-items: center;
 	background-color: #00000015;
