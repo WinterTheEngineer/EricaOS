@@ -17,10 +17,8 @@ import { CiBoxList } from "react-icons/ci";
 
 function Sidebar ({profile}) {
 
-    if (profile) {
-        const username = profile.short_name
-        const avatar = profile.avatar
-    }
+    const username = profile.short_name
+    const avatar = profile.avatar
     
     const sidebarRef = useRef()
 
