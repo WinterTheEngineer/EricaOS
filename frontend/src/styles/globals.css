@@ -80,10 +80,10 @@ a {
 }
 
 .skeleton-loader {
-	animation: skeleton-loader 1s ease-in-out infinite linear;
+	animation: skeletonLoader 1s ease-in-out infinite linear;
 }
 
-@keyframes skeleton-loader {
+@keyframes skeletonLoader {
 	0% {
 		background-color: transparent;
 	}
