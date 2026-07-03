@@ -66,19 +66,25 @@ function Sidebar ({profile}) {
                     <Searchbar />
                     <ul className='sidebar-list'>
                         <li>
-                            <Link to="/dashboard">
+                            <Link
+                                onClick={sidebarOnClose}
+                                to="/dashboard">
                                 <MdDashboard className='link-icon' />
                                 Dashboard
                             </Link>
                         </li>
                         <li>
-                            <Link to="/dashboard/notes">
+                            <Link
+                                onClick={sidebarOnClose}
+                                to="/dashboard/notes">
                                 <FaNoteSticky className='link-icon' />
                                 Notes
                             </Link>
                         </li>
                         <li>
-                            <Link to="/dashboard/lists">
+                            <Link
+                                onClick={sidebarOnClose}
+                                to="/dashboard/lists">
                                 <CiBoxList className='link-icon' />
                                 Lists
                             </Link>
