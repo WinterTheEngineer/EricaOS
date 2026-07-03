@@ -3,6 +3,10 @@ main#lists {
     flex-direction: column;
 }
 
+main#lists header {
+    justify-content: space-between;
+}
+
 main#lists .main-content {
     flex: 1;
     gap: .5rem;
@@ -26,6 +30,7 @@ main#lists .main-content.empty .empty-container {
 
 .list {
     display: flex;
+    height: 18rem;
     position: relative;
     background: #ffffff;
     flex-direction: column;
@@ -154,16 +159,8 @@ main#lists .main-content.empty .empty-container {
 
 @media screen and (min-width: 1240px) {
 
-    main#lists header {
-        justify-content: space-between;
-    }
-
     main#lists .main-content {
         grid-template-columns: repeat(4, 1fr);
-    }
-    
-    .list {
-        height: 18rem;
     }
     
     main#lists header .action-bar {
