@@ -35,6 +35,10 @@ function Sidebar ({profile}) {
         }, 2000)
     }
 
+    const sidebarOnClose = () => {
+        setSidebarDropped(prev => !prev)
+    }
+
     return (<>
         <aside id="sidebar" ref={sidebarRef} className={`${sidebarDropped ? "dropped" : ""} ${sidebarExpanded ? "expanded" : ''}`}>
             <div className="sidebar-container">
