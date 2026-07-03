@@ -94,7 +94,7 @@ function Sidebar ({profile}) {
                     </ul>
                 </div>
                 <div className="sidebar-footer">
-                    { profile ? <SkeletonLoader />
+                    { profile ? <SkeletonLoader classNames={'sidebar-footer-skeleton'}/>
                         :
                         <>
                             <button className="erica-site-btn user-toggle">
