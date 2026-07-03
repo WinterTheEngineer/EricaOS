@@ -4,7 +4,7 @@ from .serializers import SignupSerializer
 from rest_framework.views import APIView
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -114,3 +114,13 @@ class ValidateFieldView(APIView):
             "exists": exists,
             "available": not exists
         }, status=status.HTTP_200_OK)
+    
+
+class DisplayProfile(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+
+        return Response(request.user.profile.get_display_profile())

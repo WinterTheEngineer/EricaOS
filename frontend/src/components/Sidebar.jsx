@@ -1,3 +1,4 @@
+import api from '../api';
 import '../styles/Sidebar.css'
 import Searchbar from './Searchbar';
 import { logout } from '../utils/authService';
@@ -8,7 +9,7 @@ import { RxExit } from "react-icons/rx";
 import { BiNote } from "react-icons/bi";
 import { FaRegDotCircle } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PiUserFill } from "react-icons/pi";
 import { MdDashboard } from "react-icons/md";
 import { FaNoteSticky } from "react-icons/fa6";
@@ -16,7 +17,9 @@ import { CiBoxList } from "react-icons/ci";
 
 function Sidebar () {
 
-    const username = null
+    const [username, setUsername] = useState("Anonymous")
+    const [avatar, setAvatar] = useState('')
+    
     const sidebarRef = useRef()
 
     const navigate = useNavigate()
@@ -31,6 +34,25 @@ function Sidebar () {
             navigate('/')
         }, 2000)
     }
+
+    useEffect(() => {
+        const getDisplayProfile = async () => {
+            try {
+                const res = await api.get("/accounts/display-profile/");
+                console.log(res.data);
+
+                setUsername(res.data.short_name);
+
+                if (res.data.avatar) {
+                    setAvatar(res.data.avatar);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        getDisplayProfile()
+    }, [])
 
     return (<>
         <aside id="sidebar" ref={sidebarRef} className={`${sidebarDropped ? "dropped" : ""} ${sidebarExpanded ? "expanded" : ''}`}>
@@ -81,7 +103,8 @@ function Sidebar () {
                 <div className="sidebar-footer">
                     <button className="erica-site-btn user-toggle">
                         <span className="user-icon">
-                            <PiUserFill />
+                            {avatar ? 
+                                <img src={avatar} alt="" /> : <PiUserFill />}
                         </span>
                         {username ? username : "Anonymous"}
                     </button>
