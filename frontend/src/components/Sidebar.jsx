@@ -92,7 +92,7 @@ function Sidebar ({profile}) {
                     </ul>
                 </div>
                 <div className="sidebar-footer">
-                    {!profile ? (
+                    {!avatar ? (
                         <SkeletonLoader classNames="sidebar-footer-skeleton" />
                     ) : (
                         <>
