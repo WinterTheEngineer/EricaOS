@@ -186,6 +186,7 @@
 	.sidebar-footer {
 		height: 4rem;
 		display: flex;
+		padding: 0 1rem;
 		align-items: center;
 		justify-content: space-between;
 		border-top: 1px solid #00000020;
