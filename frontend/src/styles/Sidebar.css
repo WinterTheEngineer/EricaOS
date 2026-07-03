@@ -116,10 +116,15 @@
 
 .sidebar-footer .user-toggle {
 	gap: .5rem;
-	padding: 0;
+	padding: .5rem;
 	display: flex;
 	background: none;
 	align-items: center;
+	background-color: #ffffff;
+}
+
+.sidebar-footer .user-toggle:hover {
+	background-color: #00000015;
 }
 
 .sidebar-footer .user-logout {
@@ -181,7 +186,6 @@
 	.sidebar-footer {
 		height: 4rem;
 		display: flex;
-		padding: 1rem;
 		align-items: center;
 		justify-content: space-between;
 		border-top: 1px solid #00000020;
