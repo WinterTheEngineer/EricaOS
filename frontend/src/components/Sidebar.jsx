@@ -1,6 +1,7 @@
 import api from '../api';
 import '../styles/Sidebar.css'
 import Searchbar from './Searchbar';
+import SkeletonLoader from './SkeletonLoader';
 import { logout } from '../utils/authService';
 import sidebarLogo from '../assets/sidebar-logo.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom'
@@ -16,8 +17,10 @@ import { CiBoxList } from "react-icons/ci";
 
 function Sidebar ({profile}) {
 
-    const username = profile.short_name
-    const avatar = profile.avatar
+    if (profile) {
+        const username = profile.short_name
+        const avatar = profile.avatar
+    }
     
     const sidebarRef = useRef()
 
@@ -91,19 +94,24 @@ function Sidebar ({profile}) {
                     </ul>
                 </div>
                 <div className="sidebar-footer">
-                    <button className="erica-site-btn user-toggle">
-                        <span className="user-icon">
-                            {avatar ? 
-                                <img src={avatar} alt="" /> : <PiUserFill />}
-                        </span>
-                        {username ? username : "Anonymous"}
-                    </button>
-                    <button
-                        onClick={handleLogout}
-                        className="erica-site-btn user-logout"
-                    >
-                        {loggingOut ? "Logging Out..." : <RxExit />}
-                    </button>
+                    { profile ? <SkeletonLoader />
+                        :
+                        <>
+                            <button className="erica-site-btn user-toggle">
+                                <span className="user-icon">
+                                    {avatar ? 
+                                        <img src={avatar} alt="" /> : <PiUserFill />}
+                                </span>
+                                {username ? username : "Anonymous"}
+                            </button>
+                            <button
+                                onClick={handleLogout}
+                                className="erica-site-btn user-logout"
+                            >
+                                {loggingOut ? "Logging Out..." : <RxExit />}
+                            </button>
+                        </>
+                    }
                 </div>
             </div>
         </aside>

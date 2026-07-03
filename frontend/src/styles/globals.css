@@ -78,3 +78,17 @@ a {
 	opacity: .5;
 	font-size: .75rem;
 }
+
+.skeleton-loader {
+	animation: skeleton-loader 1s ease-in-out infinite linear;
+}
+
+@keyframes skeleton-loader {
+	0% {
+		background-color: transparent;
+	}
+
+	100% {
+		background-color: #a229da1f;
+	}
+}
