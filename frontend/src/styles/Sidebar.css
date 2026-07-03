@@ -115,6 +115,15 @@
 	font-size: 1.2rem;
 }
 
+.sidebar-footer {
+	height: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-inline: .5rem 1rem;
+	border-top: 1px solid #00000020;
+}
+
 .sidebar-footer .user-toggle {
 	gap: .5rem;
 	padding: .5rem;
@@ -182,15 +191,6 @@
 		display: flex;
 		list-style: none;
 		flex-direction: column;
-	}
-
-	.sidebar-footer {
-		height: 4rem;
-		display: flex;
-		padding-inline: .5rem 1rem;
-		align-items: center;
-		justify-content: space-between;
-		border-top: 1px solid #00000020;
 	}
 	
 	.sidebar-header .menu-toggle.drop {
