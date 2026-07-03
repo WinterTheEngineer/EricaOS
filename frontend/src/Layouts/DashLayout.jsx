@@ -1,4 +1,5 @@
 import '../styles/DashLayout.css'
+import api from '../api';
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { useRef, useEffect, useState } from "react";
