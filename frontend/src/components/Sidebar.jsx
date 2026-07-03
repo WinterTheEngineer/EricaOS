@@ -17,8 +17,8 @@ import { CiBoxList } from "react-icons/ci";
 
 function Sidebar ({profile}) {
 
-    const username = profile.short_name
-    const avatar = profile.avatar
+    const username = profile?.short_name;
+    const avatar = profile?.avatar;
     
     const sidebarRef = useRef()
 
@@ -92,16 +92,21 @@ function Sidebar ({profile}) {
                     </ul>
                 </div>
                 <div className="sidebar-footer">
-                    { !profile ? <SkeletonLoader classNames={'sidebar-footer-skeleton'}/>
-                        :
+                    {!profile ? (
+                        <SkeletonLoader classNames="sidebar-footer-skeleton" />
+                    ) : (
                         <>
                             <button className="erica-site-btn user-toggle">
                                 <span className="user-icon">
-                                    {avatar ? 
-                                        <img src={avatar} alt="" /> : <PiUserFill />}
+                                    {avatar ? (
+                                        <img src={avatar} alt="" />
+                                    ) : (
+                                        <PiUserFill />
+                                    )}
                                 </span>
-                                {username ? username : "Anonymous"}
+                                {username || "Anonymous"}
                             </button>
+
                             <button
                                 onClick={handleLogout}
                                 className="erica-site-btn user-logout"
@@ -109,7 +114,7 @@ function Sidebar ({profile}) {
                                 {loggingOut ? "Logging Out..." : <RxExit />}
                             </button>
                         </>
-                    }
+                    )}
                 </div>
             </div>
         </aside>
