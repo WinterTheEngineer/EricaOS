@@ -28,7 +28,7 @@
     list-style: none;
     overflow-y: scroll;
     flex-direction: column;
-    background-color: var(--backdrop-grey);
+    background-color: #a229da1f;
 }
 
 .card.exchange-rate .watched-currency {
