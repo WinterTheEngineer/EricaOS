@@ -125,6 +125,11 @@
 	border-top: 1px solid #00000020;
 }
 
+.skeleton-loader.sidebar-footer {
+	height: 3rem;
+	width: 100%;
+}
+
 .sidebar-footer .user-toggle {
 	gap: .5rem;
 	padding: .5rem;
