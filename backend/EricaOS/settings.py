@@ -29,18 +29,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG")
+DEBUG = os.getenv("DEBUG").lower() == "true"
 
 ALLOWED_HOSTS = [
     '.onrender.com',
     '192.168.18.68',
-    '192.168.1.224'
+    '192.168.1.224',
+    '127.0.0.1'
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'localhost'
-    "https://erica-os-eight.vercel.app"
-]
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        'http://localhost'
+    ]
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "https://erica-os-eight.vercel.app"
+    ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -115,7 +120,7 @@ WSGI_APPLICATION = 'EricaOS.wsgi.application'
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-if DATABASE_URL:
+if not DEBUG:
     DATABASES = {
         "default": dj_database_url.parse(
             DATABASE_URL,
@@ -133,22 +138,34 @@ else:
 
 # Media Storage
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv("CLOUD_NAME"),
-    'API_KEY': os.getenv("CLOUDINARY_API_KEY"),
-    'API_SECRET': os.getenv("CLOUDINARY_API_SECRET"),
-}
 
-MEDIA_URL = '/media/'  # or any prefix you choose
+if DEBUG:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+    
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+else:
+    CLOUDINARY_STORAGE = {
+        "CLOUD_NAME": os.getenv("CLOUD_NAME"),
+        "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+        "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+    }
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
