@@ -3,7 +3,7 @@
     padding: 1rem;
     display: flex;
     overflow: hidden;
-    max-height: 20rem;
+    height: 20rem;
     background: #ffffff;
     flex-direction: column;
     border: 1px solid #e2e2e2;
@@ -22,6 +22,7 @@
 }
 
 .card.exchange-rate .watched-currencies {
+    flex: 1;
     gap: .5rem;
     display: flex;
     padding: .5rem;
@@ -29,6 +30,18 @@
     overflow-y: scroll;
     flex-direction: column;
     background-color: #a229da1f;
+}
+
+.card.exchange-rate .watched-currencies.empty {
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.card.exchange-rate .watched-currencies.empty .site-p {
+    opacity: .5;
+    width: 70%;
+    text-align: center;
 }
 
 .card.exchange-rate .watched-currency {

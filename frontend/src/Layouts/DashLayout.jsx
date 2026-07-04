@@ -23,7 +23,7 @@ function DashLayout () {
         const getDisplayProfile = async () => {
             try {
                 const res = await api.get("/accounts/display-profile/");
-                console.log(res.data);
+                // console.log(res.data);
 
                 setProfile(res.data);
             } catch (err) {

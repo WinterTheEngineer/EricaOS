@@ -125,6 +125,10 @@
 	border-top: 1px solid #00000020;
 }
 
+.sidebar-footer.loading {
+	padding-inline: .5rem;
+}
+
 .skeleton-loader.sidebar-footer-skeleton {
 	height: 3rem;
 	width: 100%;

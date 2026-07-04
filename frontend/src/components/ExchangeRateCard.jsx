@@ -14,10 +14,6 @@ function ExchangeRateCard() {
         fetchExchangeRates();
     }, []);
 
-    useEffect(() => {
-        console.log(rates);
-    }, [rates]);
-
     return (
         <div className="card exchange-rate">
             {!rates ? (
@@ -27,19 +23,35 @@ function ExchangeRateCard() {
                         <h2 className="erica-site-heading">{rates.base.currency_code}</h2>
                         <p className="site-p">{rates.base.name}</p>
                     </div>
-                    <ul className="watched-currencies">
-                        {rates.rates.map((pairing, index) => (
-                            <li className="watched-currency" key={index}>
-                                <h3 className="erica-site-heading">
-                                    {pairing.code}
-                                    <span>{pairing.name}</span>
-                                </h3>
-                                <p className="site-p exchange-rate-value">
-                                    {Math.round(pairing.value * 100) / 100}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
+                    {rates.rates.length > 0 ?
+                        (<ul className="watched-currencies">
+                            {rates.rates.map((pairing, index) => (
+                                <li className="watched-currency" key={index}>
+                                    <h3 className="erica-site-heading">
+                                        {pairing.code}
+                                        <span>{pairing.name}</span>
+                                    </h3>
+                                    <p className="site-p exchange-rate-value">
+                                        {Math.round(pairing.value * 100) / 100}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>)
+                        :
+                        (
+                        <div className="watched-currencies empty">
+                            <h4 className="site-header">
+                                Money isn't real anyway...
+                            </h4>
+                            <p className="site-p">
+                                Once you've picked exchange rates to watch, they'll appear here
+                            </p>
+                            <button className="erica-site-btn primary">
+                                Add rates
+                            </button>
+                        </div>
+                        )
+                    }
                 </>
             )}
         </div>

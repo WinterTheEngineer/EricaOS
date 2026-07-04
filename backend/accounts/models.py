@@ -45,8 +45,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
-    def get_display_profile(self):
+    def get_display_profile(self, request):
         return {
             "short_name": self.user.get_short_name(),
-            "avatar": self.avatar.url if self.avatar else None
+            "avatar": request.build_absolute_uri(self.avatar.url) if self.avatar else None,
         }

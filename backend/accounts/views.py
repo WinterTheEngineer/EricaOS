@@ -123,4 +123,4 @@ class DisplayProfile(APIView):
     def get(self, request):
         user = request.user
 
-        return Response(request.user.profile.get_display_profile())
+        return Response(request.user.profile.get_display_profile(request))

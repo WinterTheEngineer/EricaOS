@@ -91,7 +91,7 @@ function Sidebar ({profile}) {
                         </li>
                     </ul>
                 </div>
-                <div className="sidebar-footer">
+                <div className={`sidebar-footer ${avatar ? '' : 'loading'}`}>
                     {!avatar ? (
                         <SkeletonLoader classNames="sidebar-footer-skeleton" />
                     ) : (
