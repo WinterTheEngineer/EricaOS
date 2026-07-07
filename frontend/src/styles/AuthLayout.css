@@ -43,6 +43,7 @@
     #root.auth-layout main {
         flex: 1;
         display: flex;
+        position: relative;
         align-items: center;
         justify-content: center;
     }
@@ -52,6 +53,12 @@
         height: 100%;
         object-fit: cover;
         object-position: center;
+    }
+
+    #root.auth-layout main #rotate-wallpaper {
+        right: 1rem;
+        bottom: 1rem;
+        position: absolute;
     }
 }
 
