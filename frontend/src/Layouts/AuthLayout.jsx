@@ -1,7 +1,9 @@
 import '../styles/AuthLayout.css';
 import { Outlet } from "react-router-dom";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Slide, ToastContainer } from 'react-toastify'
+
+import { FaRotate } from "react-icons/fa6";
 
 function AuthLayout () {
 
@@ -16,7 +18,13 @@ function AuthLayout () {
         }
     }, []);
     
-    const heroId = Math.floor(Math.random() * 10);
+    const [heroId, setHeroId] = useState(() =>
+        Math.floor(Math.random() * 10)
+    );
+    
+    const rotateWallpaper = () => {
+        setHeroId(Math.floor(Math.random() * 10));
+    };
 
     return (<>
         <aside>
@@ -36,6 +44,12 @@ function AuthLayout () {
                 transition={Slide}
 			/>
             <img src={`/auth-wallpapers/${heroId}.webp`} className='hero-image' />
+            <button
+                id="rotate-wallpaper"
+                onClick={() => rotateWallpaper()}
+                className='erica-site-btn primary'>
+                <FaRotate />
+            </button>
         </main>
     </>)
 }
