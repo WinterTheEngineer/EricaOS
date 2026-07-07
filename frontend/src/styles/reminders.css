@@ -1,0 +1,16 @@
+main#reminders {
+    display: flex;
+    flex-direction: column;
+}
+
+main#reminders .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 1240px) {
+    main#reminders .main-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

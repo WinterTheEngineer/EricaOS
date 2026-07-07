@@ -76,6 +76,23 @@
 	list-style: none;
 }
 
+#sidebar ul li.active {
+	position: relative;
+	border-radius: .25rem;
+	box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+#sidebar ul li.active::before {
+	left: 0;
+	top: 50%;
+	height: 60%;
+	content: '';
+	width: .2rem;
+	position: absolute;
+	transform: translateY(-50%);
+	background-color: var(--erica-fuschia);
+}
+
 #sidebar ul li a {
 	gap: .5rem;
 	opacity: .5;
@@ -88,6 +105,10 @@
 	border-radius: var(--global-border-radius);
 	transition: .3s ease background-color,
 				.3s ease opacity;
+}
+
+#sidebar ul li.active > a {
+	opacity: 1;
 }
 
 #sidebar ul li a:hover {

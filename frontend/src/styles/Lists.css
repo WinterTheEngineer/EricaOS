@@ -16,91 +16,16 @@ main#lists .main-content {
     /* background-color: #f6f6f6; */
 }
 
-main#lists .main-content.empty {
-    display: grid;
-    place-items: center;
-}
-
-main#lists .main-content.empty .empty-container {
-    gap: 1rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
 .list {
     display: flex;
-    height: 18rem;
     position: relative;
-    background: #ffffff;
     flex-direction: column;
-    border: 1px solid #e2e2e2;
-	border-radius: var(--global-border-radius);
-	box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
-}
-
-.list .header {
-    display: flex;
-    padding: 1rem;
-    justify-content: space-between;
-    border-bottom: 1px solid #e2e2e2;
 }
 
 .list .header .details {
     gap: .25rem;
     display: flex;
     flex-direction: column;
-}
-
-.list .header .list-options-toggle{
-    border: none;
-    cursor: pointer;
-    background-color: #ffffff;
-}
-
-.list .list-options {
-    top: 3rem;
-    opacity: 0;
-    right: 1rem;
-    z-index: 99;
-    width: 15rem;
-    padding: .5rem;
-    list-style: none;
-    min-height: 10rem;
-    position: absolute;
-    visibility: hidden;
-    border-radius: .25rem;
-    border: 1px solid #e2e2e2;
-    background-color: #ffffff;
-
-    transition: .3s ease opacity,
-                .3s ease visibility;
-}
-
-.list .list-options.open {
-    opacity: 1;
-    visibility: visible;
-}
-
-.list-options .list-option {
-    gap: .5rem;
-    display: flex;
-    color: #000000;
-    font-size: .8rem;
-    cursor: pointer;
-    align-items: center;
-    padding: .75rem .5rem;
-    transition: .3s ease background-color,
-                .3s ease color;
-}
-
-.list-options .list-option:hover {
-    color: #a229da;
-    background-color: #a229da1f;
-}
-
-.list-options .list-option svg {
-    font-size: 1.2rem;
 }
 
 .main-content.empty .empty-container svg {
@@ -132,6 +57,7 @@ main#lists .main-content.empty .empty-container {
 .list-item {
     gap: .5rem;
     display: flex;
+    cursor: pointer;
     width: fit-content;
     max-width: 10rem;
     font-size: .8rem;
@@ -157,6 +83,10 @@ main#lists .main-content.empty .empty-container {
     background-color: #a229da44;
 }
 
+.card-actions#modify-list-item {
+    
+}
+
 @media screen and (min-width: 1240px) {
 
     main#lists .main-content {
@@ -172,10 +102,6 @@ main#lists .main-content.empty .empty-container {
     main#lists header .action-bar .erica-site-btn.primary {
         display: flex;
         align-items: center;
-    }
-    
-    main#lists .main-content {
-        padding: 1rem;
     }
 }
 

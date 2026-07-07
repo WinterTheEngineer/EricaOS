@@ -9,6 +9,7 @@ function DashLayout () {
 
     const mainRef = useRef();
     const [profile, setProfile] = useState({})
+    const [activeScene, setActiveScene] = useState('')
     
     useEffect(() => {
         const parentElement = mainRef.current?.parentElement;
@@ -35,9 +36,9 @@ function DashLayout () {
     }, [])
 
     return (<>
-        <Sidebar profile={profile} />
+        <Sidebar profile={profile} activeScene={activeScene}/>
         <main ref={mainRef}>
-            <Outlet context={profile} />
+            <Outlet context={{profile, setActiveScene}} />
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}

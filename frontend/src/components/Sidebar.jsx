@@ -14,8 +14,9 @@ import { PiUserFill } from "react-icons/pi";
 import { MdDashboard } from "react-icons/md";
 import { FaNoteSticky } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
+import { LuFolderClock } from "react-icons/lu";
 
-function Sidebar ({profile}) {
+function Sidebar ({profile, activeScene}) {
 
     const username = profile?.short_name;
     const avatar = profile?.avatar;
@@ -65,7 +66,7 @@ function Sidebar ({profile}) {
                 <div className="sidebar-main">
                     <Searchbar />
                     <ul className='sidebar-list'>
-                        <li>
+                        <li className={`${activeScene === 'dashboard' ? 'active' : ''}`}>
                             <Link
                                 onClick={sidebarOnClose}
                                 to="/dashboard">
@@ -73,15 +74,15 @@ function Sidebar ({profile}) {
                                 Dashboard
                             </Link>
                         </li>
-                        {/* <li>
+                        <li className={`${activeScene === 'reminders' ? 'active' : ''}`}>
                             <Link
                                 onClick={sidebarOnClose}
-                                to="/dashboard/notes">
-                                <FaNoteSticky className='link-icon' />
-                                Notes
+                                to="/dashboard/reminders">
+                                <LuFolderClock className='link-icon' />
+                                Reminders
                             </Link>
-                        </li> */}
-                        <li>
+                        </li>
+                        <li className={`${activeScene === 'lists' ? 'active' : ''}`}>
                             <Link
                                 onClick={sidebarOnClose}
                                 to="/dashboard/lists">

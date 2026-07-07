@@ -1,4 +1,5 @@
 import Notes from './pages/Notes';
+import Reminders from './pages/Reminders';
 import Test from './components/Test';
 import Login from './pages/Login';
 import Lists from './pages/Lists';
@@ -27,6 +28,7 @@ export const router = createBrowserRouter(
                 <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="lists" element={<ProtectedRoute><Lists /></ProtectedRoute>} />
                 <Route path="notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
+                <Route path="reminders" element={<ProtectedRoute><Reminders /></ProtectedRoute>} />
             </Route>
 
             <Route element={<AuthLayout />}>

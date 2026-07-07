@@ -1,0 +1,108 @@
+.erica-card {
+    height: 18rem;
+    /* overflow: hidden; */
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: var(--global-border-radius);
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
+
+.erica-card .card-header {
+    height: 4rem;
+    display: flex;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.erica-card .card-header .card-options-toggle{
+    border: none;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+.erica-card .card-options {
+    top: 3rem;
+    opacity: 0;
+    right: 1rem;
+    z-index: 99;
+    width: 15rem;
+    padding: .5rem;
+    list-style: none;
+    min-height: 10rem;
+    position: absolute;
+    visibility: hidden;
+    border-radius: .25rem;
+    border: 1px solid #e2e2e2;
+    background-color: #ffffff;
+
+    transition: .3s ease opacity,
+                .3s ease visibility;
+}
+
+.erica-card .card-options.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.card-options .card-option {
+    gap: .5rem;
+    display: flex;
+    color: #000000;
+    font-size: .8rem;
+    cursor: pointer;
+    align-items: center;
+    padding: .75rem .5rem;
+    transition: .3s ease background-color,
+                .3s ease color;
+}
+
+.card-options .card-option:hover {
+    color: #a229da;
+    background-color: #a229da1f;
+}
+
+.card-options .card-option svg {
+    font-size: 1.2rem;
+}
+
+.card-actions {
+    gap: .5rem;
+    left: 50%;
+    z-index: 10;
+    height: 4rem;
+    bottom: .5rem;
+    display: flex;
+    padding: .5rem;
+    position: absolute;
+    width: calc(100% - 1rem);
+    transform: translate(-50%, 0%);
+    border: 1px solid #e2e2e2;
+    background-color: #ffffff;
+    justify-content: space-between;
+    border-radius: var(--global-border-radius);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    transition: .3s ease transform;
+}
+
+.card-actions.closed {
+    transform: translate(-50%, 120%);
+}
+
+.card-actions input {
+    border: none;
+    max-width: 50%;
+    padding: 0 .5rem;
+    outline: none;
+    background-color: var(--backdrop-grey);
+}
+
+.card-action-buttons {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}

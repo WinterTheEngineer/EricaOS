@@ -6,7 +6,7 @@ import { useOutletContext } from 'react-router-dom';
 function Dashboard() {
 
     const mainRef = useRef()
-    const profile = useOutletContext()
+    const { profile, setActiveScene } = useOutletContext();
 
     const username = profile.short_name
     
@@ -19,7 +19,7 @@ function Dashboard() {
             parentElement.classList = ''
             parentElement.id = 'dashboard';
         }
-
+        setActiveScene('dashboard')
     }, []);
 
     return (
