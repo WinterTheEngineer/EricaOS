@@ -44,7 +44,7 @@ function Login() {
     };
 
     return (<>
-        <aside>
+        <>
             <form onSubmit={handleSubmit} className="erica-form" id="login">
                 <div className="form-header">
                     <img src={sidebarLogo} alt="Erica Logo" className='logo' />
@@ -100,10 +100,7 @@ function Login() {
             <Link to={'/sign-up'} className='erica-site-link'>
                 Don't have an account? <span>Sign Up</span>
             </Link>
-        </aside>
-        <div id="login-hero">
-            
-        </div>
+        </>
     </>)
 }
 

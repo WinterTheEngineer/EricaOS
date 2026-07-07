@@ -2,14 +2,10 @@
 
 #root.auth-layout {
     height: 100dvh;
-}
-
-#root.auth-layout main {
     width: 100%;
-    height: 100%;
 }
 
-#root.auth-layout main aside {
+#root.auth-layout aside {
     width: 100%;
     height: 100%;
     border: none;
@@ -20,7 +16,7 @@
     justify-content: center;
 }
 
-#root.auth-layout #login-hero {
+#root.auth-layout #main {
     display: none;
 }
 
@@ -34,21 +30,28 @@
 
 @media screen and (min-width: 1240px) {
 
-    #root.auth-layout main {
+    #root.auth-layout {
         display: flex;
     }
     
-    #root.auth-layout main aside {
+    #root.auth-layout aside {
         width: 40%;
         display: flex;
         flex-direction: column;
     }
     
-    #root.auth-layout #login-hero {
+    #root.auth-layout main {
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    #root.auth-layout main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 }
 

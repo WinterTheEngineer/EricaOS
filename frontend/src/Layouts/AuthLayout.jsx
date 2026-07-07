@@ -16,9 +16,13 @@ function AuthLayout () {
         }
     }, []);
     
-    return (
-        <main ref={mainRef}>
+    const heroId = Math.floor(Math.random() * 10);
+
+    return (<>
+        <aside>
             <Outlet />
+        </aside>
+        <main ref={mainRef}>
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}
@@ -31,8 +35,9 @@ function AuthLayout () {
                 theme="light"
                 transition={Slide}
 			/>
+            <img src={`/auth-wallpapers/${heroId}.webp`} className='hero-image' />
         </main>
-    )
+    </>)
 }
 
 export default AuthLayout;
