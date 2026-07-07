@@ -96,3 +96,14 @@ class ListDelete(generics.DestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return List.objects.filter(author=user)
+
+
+class EditListItem(generics.UpdateAPIView):
+    serializer_class = ListItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ListItem.objects.filter(
+            list_id=self.kwargs["list_id"],
+            list__user=self.request.user,
+        )

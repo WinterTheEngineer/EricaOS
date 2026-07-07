@@ -35,7 +35,8 @@ ALLOWED_HOSTS = [
     '.onrender.com',
     '192.168.18.68',
     '192.168.1.224',
-    '127.0.0.1'
+    '127.0.0.1',
+    '192.168.2.185'
 ]
 
 if DEBUG:
@@ -69,6 +70,7 @@ INSTALLED_APPS = [
     'lists',
     'notes',
     'finance',
+    'clock',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
