@@ -3,10 +3,6 @@ main#lists {
     flex-direction: column;
 }
 
-main#lists header {
-    justify-content: space-between;
-}
-
 main#lists .main-content {
     flex: 1;
     gap: .5rem;

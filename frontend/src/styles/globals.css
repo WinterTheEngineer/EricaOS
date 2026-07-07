@@ -12,7 +12,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Inter', 'Geist Mono';
+	font-family: 'Geist', 'Inter';
 	-webkit-font-smoothing: antialiased;
   	-moz-osx-font-smoothing: grayscale;
 }
@@ -92,11 +92,14 @@ a {
 	padding: 1rem;
 }
 
+main header {
+    justify-content: space-between;
+}
+
 .main-content.empty {
     display: grid;
     place-items: center;
 }
-
 
 .main-content.empty .empty-container {
     gap: 1rem;
