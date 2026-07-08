@@ -21,6 +21,8 @@ function Lists () {
     const date = new Date();
     
     const [lists, setLists] = useState([])
+    const { setActiveScene } = useOutletContext();
+
     const [openMenuId, setOpenMenuId] = useState(null);
     const [newListItems, setNewListItems] = useState([])
     const [newListItem, setNewListItem] = useState('')
