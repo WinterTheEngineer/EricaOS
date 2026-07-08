@@ -181,7 +181,35 @@ function Lists () {
                                         </li>
                                     ))}
                             </ul>
-                        </div>
+                            }
+
+                            actions={
+                                listObj.items.some(item => item.id === editingItemId) && (
+                                    <div
+                                        className={`card-actions ${listObj.items.some(item => item.id === editingItemId) ? "" : "closed"}`}
+                                        id="modify-list-item"
+                                        ref={cardActionRef}
+                                    >
+                                        <input
+                                            type="text"
+                                            value={refactoredListItem.name}
+                                            placeholder='Rename this item...'
+                                            name="list-item-refactor"
+                                            id="list-item-refactor"
+                                            onChange={handleRefactorChange}
+                                        />
+                                        <div className="card-action-buttons">
+                                            <button className="erica-site-btn primary" id="confirm">
+                                                <FaCheck />
+                                            </button>
+                                            <button className="erica-site-btn secondary" id="cancel" onClick={() => setEditingItemId(null)}>
+                                                <IoCloseSharp />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        />
                     ))}
                 </>
             ) : (
