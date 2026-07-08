@@ -40,6 +40,8 @@ function Lists () {
             parentElement.classList = ''
             parentElement.id = 'lists';
         }
+
+        setActiveScene('lists')
     }, []);
 
     useEffect(() => {
