@@ -1,4 +1,5 @@
 import '../styles/Lists.css'
+import '../styles/card.css'
 import api from '../api';
 import { useRef, useEffect, useState } from "react";
 
@@ -6,7 +7,9 @@ import { RiH1, RiCloseCircleFill } from 'react-icons/ri';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { TbPlaylistX } from "react-icons/tb";
 import { FaPlus } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
+import { IoCloseSharp } from "react-icons/io5";
 import sidebarLogo from '../assets/sidebar-logo.png';
 import Modal from '../components/EricaUI/Modal';
 import { formToJSON } from 'axios';
@@ -14,10 +17,12 @@ import { toast } from 'react-toastify';
 
 import { SlOptionsVertical } from "react-icons/sl";
 import { BiSolidTrashAlt } from "react-icons/bi";
+import Card from '../components/EricaUI/Card';
 
 function Lists () {
 
     const mainRef = useRef();
+    const cardActionRef = useRef()
     const date = new Date();
     
     const [lists, setLists] = useState([])
