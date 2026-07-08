@@ -136,42 +136,50 @@ function Lists () {
             {lists.length > 0 ? (
                 <>
                     {lists.map((listObj, index) => (
-                        
-                        <div className="list" key={listObj.id}>
-                            <div className="header">
-                                <div className="details">
-                                    <Link className="site-heading">
-                                        {listObj.title}
-                                    </Link>
-                                    <p className="erica-subtext">
-                                        {listObj.description}
-                                    </p>
-                                </div>
-                                <button
-                                    className="list-options-toggle"
-                                    onClick={() => toggleListOptions(listObj.id)}
-                                >
-                                    <SlOptionsVertical />
-                                </button>
-                                <ul className={`list-options ${openMenuId === listObj.id ? "open" : ""}`}>
-                                    <li
-                                        className="list-option"
-                                        onClick={() => handleDelete(listObj.id)}
+                        <Card
+                            className={'erica-card'}
+                            key={listObj.id}
+                            header={
+                                <>
+                                    <div className="details">
+                                        <Link className="site-heading">
+                                            {listObj.title}
+                                        </Link>
+                                        <p className="erica-subtext">
+                                            {listObj.description}
+                                        </p>
+                                    </div>
+                                    <button
+                                        className="card-options-toggle"
+                                        onClick={() => toggleListOptions(listObj.id)}
                                     >
-                                        <BiSolidTrashAlt />
-                                        Delete
-                                    </li>
-                                </ul>
-                            </div>
-                            <ul className={`list-items ${listObj.ordered ? 'ordered' : ''}`}>
-                                {listObj.items.map((listItem) => (
-                                    <li className="list-item" key={listItem.id}>
-                                        {listObj.ordered && 
-                                            <span>{`${listItem.order}.`}</span>
-                                        }
-                                        {listItem.name}
-                                    </li>
-                                ))}
+                                        <SlOptionsVertical />
+                                    </button>
+                                    <ul className={`list-options card-options ${openMenuId === listObj.id ? "open" : ""}`}>
+                                        <li
+                                            className="card-option"
+                                            onClick={() => handleDelete(listObj.id)}
+                                        >
+                                            <BiSolidTrashAlt />
+                                            Delete
+                                        </li>
+                                    </ul>
+                                </>
+                            }
+
+                            body={
+                                <ul className={`list-items ${listObj.ordered ? 'ordered' : ''}`}>
+                                    {listObj.items.map((listItem) => (
+                                        <li
+                                            className="list-item" key={listItem.id}
+                                            onClick={() => handleListItem(listItem)}
+                                        >
+                                            {listObj.ordered && 
+                                                <span>{`${listItem.order}.`}</span>
+                                            }
+                                            {listItem.name}
+                                        </li>
+                                    ))}
                             </ul>
                         </div>
                     ))}
