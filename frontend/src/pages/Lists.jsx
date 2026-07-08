@@ -3,7 +3,7 @@ import api from '../api';
 import { useRef, useEffect, useState } from "react";
 
 import { RiH1, RiCloseCircleFill } from 'react-icons/ri';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { TbPlaylistX } from "react-icons/tb";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
