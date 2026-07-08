@@ -117,6 +117,22 @@ function Lists () {
         setCreateListModalOpen(prev => !prev)
     }
 
+    const handleListItem = (item) => {
+        setEditingItemId(item.id);
+
+        setRefactoredListItem({
+            id: item.id,
+            name: item.name,
+        });
+    }
+
+    const handleRefactorChange = (e) => {
+        setRefactoredListItem(prev => ({
+            ...prev,
+            name: e.target.value,
+        }));
+    };
+
     const handleDelete = async (id) => {
         try {
             await api.delete(`/lists/${id}/`);
@@ -131,6 +147,15 @@ function Lists () {
     const toggleListOptions = (id) => {
         setOpenMenuId(prev => (prev === id ? null : id));
     };
+
+    const editListItem = async () => {
+        const res = await api.patch(
+            `/lists/${listId}/items/${refactoredListItem.id}/`,
+            {
+                name: refactoredListItem.name,
+            }
+        );
+    }
 
     return (<>
         <header ref={mainRef}>

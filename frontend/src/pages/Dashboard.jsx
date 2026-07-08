@@ -25,7 +25,7 @@ function Dashboard() {
     return (
         <>
             <header ref={mainRef}>
-                <h3 className="site-heading">Welcome back, {username}</h3>
+                <h3 className="erica-site-heading">Welcome back, {username}</h3>
             </header>
             <div className="main-content">
                 <ExchangeRateCard />
