@@ -93,8 +93,8 @@
 }
 
 .card-actions input {
+    flex: 1;
     border: none;
-    max-width: 50%;
     padding: 0 .5rem;
     outline: none;
     background-color: var(--backdrop-grey);
