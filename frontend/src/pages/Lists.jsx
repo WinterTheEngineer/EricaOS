@@ -23,6 +23,12 @@ function Lists () {
     const [lists, setLists] = useState([])
     const { setActiveScene } = useOutletContext();
 
+    const [editingItemId, setEditingItemId] = useState(null);
+    const [refactoredListItem, setRefactoredListItem] = useState({
+        id: null,
+        name: "",
+    });
+
     const [openMenuId, setOpenMenuId] = useState(null);
     const [newListItems, setNewListItems] = useState([])
     const [newListItem, setNewListItem] = useState('')
