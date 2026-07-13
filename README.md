@@ -1,4 +1,4 @@
-![My headshot](static/images/logos/github_banner.png)
+![My headshot](frontend/public/logos/github_banner.png)
 <h1 align="center">
   Erica
 </h1>
