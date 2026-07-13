@@ -28,6 +28,7 @@ export default function Register() {
 
     // Loading states
     const [checkingEmail, setCheckingEmail] = useState(false);
+    const [checkingPhone, setCheckingPhone] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     
     const [messages, setMessages] = useState([]);

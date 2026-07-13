@@ -36,8 +36,8 @@ function Nav () {
                     <li>Contact</li>
                 </ul>
                 <div className="nav-actions">
-                    <Link to="/login" href="http://" className='sign-in'>Sign in</Link>
-                    <Link to="/sign-up" href="http://" className='sign-up'>Sign Up</Link>
+                    <Link to="/login" href="http://" className='erica-site-btn primary'>Sign in</Link>
+                    <Link to="/sign-up" href="http://" className='erica-site-btn secondary'>Sign Up</Link>
                 </div>
                 <button
                     id='nav-toggle'

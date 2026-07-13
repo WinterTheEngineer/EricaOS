@@ -4,6 +4,12 @@ main#dashboard .main-content {
     flex-direction: column;
 }
 
+
+.skeleton-loader.header-username-skeleton {
+	height: 2rem;
+	width: 20%;
+}
+
 @media screen and (min-width: 1240px) {
     
     main#dashboard .main-content {

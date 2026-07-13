@@ -44,11 +44,13 @@ a {
 
 .erica-site-btn.primary{
 	color: #ffffff;
+	font-weight: 500;
 	background-color: var(--erica-fuschia);
 }
 
 .erica-site-btn.secondary{
 	color: #ffffff;
+	font-weight: 500;
 	background-color: #000000;
 }
 
@@ -85,6 +87,7 @@ a {
 }
 
 .skeleton-loader {
+	border-radius: .25rem;
 	animation: skeletonLoader 1s ease-in-out infinite;
 }
 

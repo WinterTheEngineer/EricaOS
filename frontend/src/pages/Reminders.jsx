@@ -47,7 +47,7 @@ function Reminders () {
     return (
         <>
             <header ref={mainRef}>
-                <h3 className="site-heading">Reminders</h3>
+                <h3 className="erica-site-heading">Reminders</h3>
                 <div className="action-bar">
                     <button
                         className='erica-site-btn primary'>

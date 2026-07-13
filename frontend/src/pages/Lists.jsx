@@ -159,7 +159,7 @@ function Lists () {
 
     return (<>
         <header ref={mainRef}>
-            <h3 className="site-header">Lists</h3>
+            <h3 className="erica-site-heading">Lists</h3>
             <div className="action-bar">
                 <button
                     onClick={() => setCreateListModalOpen(prev => !prev)}
