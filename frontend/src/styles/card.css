@@ -1,7 +1,6 @@
 .erica-card {
     height: 18rem;
     display: flex;
-    max-width: 23rem;
     position: relative;
     background: #ffffff;
     flex-direction: column;
@@ -129,4 +128,10 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+@media screen and (min-width: 1440px) {
+    .erica-card {
+        max-width: 23rem;
+    }
 }
