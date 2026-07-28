@@ -81,7 +81,6 @@ nav.active {
         border-radius: .25rem;
         justify-content: center;
         background-color: #000000;
-        border: 2px solid #000000;
         transition: .3s ease color,
                     .3s ease background-color;
     }

@@ -1,4 +1,4 @@
-function Modal({title, children}) {
+function Modal({title, tabs, children}) {
 
     return (
         <>

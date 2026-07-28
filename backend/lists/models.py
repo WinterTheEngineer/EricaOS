@@ -12,6 +12,7 @@ class List(models.Model):
     slug = models.SlugField(null=True, blank=True, unique=True)
     description = models.CharField(max_length=255, blank=True, null=True)
     ordered = models.BooleanField(default=False)
+    checklist = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="lists")
@@ -38,6 +39,7 @@ class List(models.Model):
 
 class ListItem(models.Model):
     order = models.PositiveIntegerField(blank=True, null=True)
+    completed = models.BooleanField(default=False)
     name = models.CharField(max_length=120)
 
     parent = models.ForeignKey(

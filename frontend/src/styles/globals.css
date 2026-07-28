@@ -33,6 +33,55 @@ a {
 	flex-direction: column;
 }
 
+.erica-form .form-input {
+	width: 100%;
+	display: flex;
+	border: 1px solid #ccc;
+	background-color: #f6f6f6;
+	border-radius: var(--global-border-radius);
+}
+
+.erica-input-field,
+.erica-textarea {
+	width: 100%;
+	border: none;
+	padding: 1rem;
+	font-size: .9rem;
+	background: none;
+	font-weight: 500;
+	outline: none;
+}
+
+.erica-textarea {
+	resize: none;
+	min-height: 10rem;
+}
+
+.erica-checkbox {
+	gap: .5rem;
+	width: 100%;
+	display: flex;
+	font-size: .8rem;
+	align-items: center;
+}
+
+.erica-form input[type="checkbox"] {
+	width: 1.5rem;
+	height: 1.5rem;
+	accent-color: var(--erica-fuschia);
+}
+
+.erica-title-field {
+	border: none;
+	outline: none;
+	font-weight: 500;
+	font-size: 1.5rem;
+}
+
+.erica-title-field::placeholder {
+	opacity: .5;
+}
+
 .erica-site-btn {
 	border: none;
 	display: grid;
@@ -45,13 +94,23 @@ a {
 .erica-site-btn.primary{
 	color: #ffffff;
 	font-weight: 500;
+	border: 2px solid var(--erica-fuschia);
 	background-color: var(--erica-fuschia);
 }
 
 .erica-site-btn.secondary{
 	color: #ffffff;
 	font-weight: 500;
+	border: 2px solid #000000;
 	background-color: #000000;
+}
+
+.erica-site-btn.primary:hover {
+	color: var(--erica-fuschia);
+}
+
+.erica-site-btn.secondary:hover {
+	color: #000000;
 }
 
 .erica-site-link {
@@ -59,6 +118,7 @@ a {
 	color: #000000;
 	font-size: .9rem;
 	position: relative;
+	font-weight: 500;
 }
 
 .erica-site-link::after {
@@ -79,6 +139,19 @@ a {
 
 .erica-site-link span {
 	color: var(--erica-fuschia);
+}
+
+.erica-select {
+	border: none;
+	padding: .5rem;
+	cursor: pointer;
+	background: none;
+	border-radius: var(--global-border-radius);
+	transition: .3s ease background-color;
+}
+
+.erica-select:hover {
+	background-color: #AC00C720;
 }
 
 .erica-subtext {

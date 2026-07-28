@@ -1,6 +1,7 @@
 .erica-card {
     height: 18rem;
     display: flex;
+    max-width: 23rem;
     position: relative;
     background: #ffffff;
     flex-direction: column;
@@ -10,12 +11,24 @@
 }
 
 .erica-card .card-header {
+    gap: 1rem;
     height: 4rem;
     display: flex;
     padding: 0 1rem;
     align-items: center;
     justify-content: space-between;
     /* border-bottom: 1px solid #e2e2e2; */
+}
+
+.erica-card .card-header .details {
+    flex: 1;
+}
+
+.erica-card .card-header .details .erica-subtext {
+    max-width: 18rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .erica-card .card-header .card-options-toggle{

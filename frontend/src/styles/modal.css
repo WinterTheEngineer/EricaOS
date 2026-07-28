@@ -18,6 +18,11 @@
     border-radius: var(--global-border-radius);
 }
 
+.modal-tabs {
+    height: 6rem;
+    border-top: 1px solid #dddddda8;
+}
+
 .modal-header,
 .modal-footer {
     height: 4rem;
@@ -48,7 +53,7 @@
     display: flex;
     overflow-y: scroll;
     flex-direction: column;
-    border-block: 1px solid rgba(221, 221, 221, 0.658)
+    /* border-block: 1px solid #dddddda8; */
 }
 
 .erica-modal .erica-form {

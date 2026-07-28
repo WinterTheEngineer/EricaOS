@@ -10,14 +10,6 @@
 	flex-direction: column;
 }
 
-.erica-form .form-input {
-	width: 100%;
-	display: flex;
-	border: 1px solid #ccc;
-	background-color: #f6f6f6;
-	border-radius: var(--global-border-radius);
-}
-
 .manual-login {
 	gap: 1rem;
 	display: flex;
@@ -51,38 +43,8 @@
 	grid-template-columns: 1fr 1fr;
 }
 
-.erica-form .form-input input,
-.erica-form .form-input textarea {
-	width: 100%;
-	border: none;
-	padding: 1rem;
-	font-size: .9rem;
-	background: none;
-	font-weight: 500;
-	outline: none;
-}
-
-.erica-form .form-input textarea {
-	resize: none;
-	min-height: 10rem;
-}
-
 .erica-form .dual-input {
 	display: flex;
-}
-
-.erica-form .erica-checkbox {
-	gap: .5rem;
-	width: 100%;
-	display: flex;
-	font-size: .8rem;
-	align-items: center;
-}
-
-.erica-form input[type="checkbox"] {
-	width: 1.5rem;
-	height: 1.5rem;
-	accent-color: var(--erica-fuschia);
 }
 
 .erica-form .toggle-privacy {
@@ -181,12 +143,6 @@
 		margin: 1rem 0;
 	}
 	
-	.erica-form .form-input input {
-		padding: .5rem;
-		font-size: .8rem;
-		outline: none;
-	}
-	
 	.erica-form .erica-site-btn {
 		padding: .5rem;
 		font-size: .8rem;
@@ -203,7 +159,8 @@
 		margin: 2rem 0;
 	}
 	
-	.erica-form .form-input input {
+	.erica-input-field,
+	.erica-textarea {
 		padding: .75rem;
 	}
 	

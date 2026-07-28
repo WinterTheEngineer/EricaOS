@@ -72,6 +72,7 @@ function Login() {
                         <input
                             type="email"
                             value={email}
+                            className='erica-input-field'
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Email Address"
                         />
@@ -80,6 +81,7 @@ function Login() {
                         <input
                             type={privacy ? 'password' : 'text'}
                             value={password}
+                            className='erica-input-field'
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="password"
                         />

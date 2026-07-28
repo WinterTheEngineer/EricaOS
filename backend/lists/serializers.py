@@ -11,7 +11,7 @@ User = get_user_model()
 class ListItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListItem
-        fields = ["id", "order", "name"]
+        fields = ["id", "order", "completed", "name"]
 
 
 # -------------------------
@@ -48,6 +48,7 @@ class ListSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "ordered",
+            "checklist",
             "items",
             "items_input",
             "created_at",

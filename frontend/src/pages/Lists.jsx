@@ -43,6 +43,14 @@ function Lists () {
     const [loading, setLoading] = useState(false);
     const [createListModalOpen, setCreateListModalOpen] = useState(false)
     
+    const list_choices = [
+        { dataTitle: 'unordered', displayTitle: 'Bullet List' },
+        { dataTitle: 'ordered', displayTitle: 'Ordered List' },
+        { dataTitle: 'checklist', displayTitle: 'Checklist' },
+    ]
+    
+    const [activeChoice, setActiveChoice] = useState(list_choices[0].dataTitle)
+    
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -76,10 +84,13 @@ function Lists () {
         setLoading(true);
 
         try {
+
+            console.log(`sending request with ${activeChoice} list`)
             const res = await api.post("/lists/create/", {
                 title,
                 description,
-                ordered,
+                ordered: activeChoice === 'ordered',
+                checklist: activeChoice === 'checklist',
                 items_input: newListItems
             });
             
@@ -113,6 +124,7 @@ function Lists () {
         setTitle("");
         setDescription("");
         setOrdered(false);
+        setActiveChoice(list_choices[0].dataTitle)
         setNewListItems([])
         setCreateListModalOpen(prev => !prev)
     }
@@ -155,6 +167,12 @@ function Lists () {
                 name: refactoredListItem.name,
             }
         );
+    }
+
+    const setChoice = (choice) => {
+        setActiveChoice(choice);
+        activeChoice === 'ordered' ? setOrdered(true) : setOrdered(false)
+        // console.log(activeChoice)
     }
 
     return (<>
@@ -228,6 +246,7 @@ function Lists () {
                                     >
                                         <input
                                             type="text"
+                                            className='erica-input-field'
                                             value={refactoredListItem.name}
                                             placeholder='Rename this item...'
                                             name="list-item-refactor"
@@ -264,40 +283,34 @@ function Lists () {
             )}
         </div>
         {createListModalOpen &&
-            <Modal 
+            <Modal
+                choices={list_choices}
+                onChoiceChange={setChoice}
                 body={
                     <form className="erica-form">
-                        <div className="form-input">
-                            <input
-                                type="text"
-                                placeholder="List title"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                        <input
+                            type="text"
+                            className='erica-title-field'
+                            placeholder="New list title..."
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                                 />
-                        </div>
 
                         <div className="form-input">
                             <textarea
+                            className='erica-textarea'
                                 placeholder="Description (optional)"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>
 
-                        <label className="erica-checkbox">
-                            <input
-                                type="checkbox"
-                                checked={ordered}
-                                onChange={(e) => setOrdered(e.target.checked)}
-                            />
-                            Ordered list
-                        </label>
-
                         <div className="add-list-items">
-                            <h3 className="site-heading">List Items</h3>
+                            <h3 className="erica-site-heading">List Items</h3>
                             <div className="form-input">
                                 <input
                                     type="text"
+                                    className='erica-input-field'
                                     placeholder="Item title"
                                     value={newListItem}
                                     onChange={(e) => setNewListItem(e.target.value)}
@@ -316,7 +329,7 @@ function Lists () {
                                     <IoMdAdd />
                                 </button>
                             </div>
-                            <ul className={`list-items ${ordered ? 'ordered' : ''}`}>
+                            <ul className={`list-items ${activeChoice === 'ordered' ? 'ordered' : ''}`}>
                                 {newListItems.map((item, index) => (
                                     <li key={index} className="modal-list-item">
                                         {item.name}
