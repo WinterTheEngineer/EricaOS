@@ -16,17 +16,17 @@ function Landing() {
         }
     }, [])
 
-    // useEffect(() => {
-    //     const checkHeartbeat = async () => {
-    //         try {
-    //             const res = await api.get("/api/heartbeat/");
-    //         } catch (err) {
-    //             console.error("Heartbeat failed:", err);
-    //         }
-    //     };
+    useEffect(() => {
+        const checkHeartbeat = async () => {
+            try {
+                const res = await api.get("/api/heartbeat/");
+            } catch (err) {
+                console.error("Heartbeat failed:", err);
+            }
+        };
 
-    //     checkHeartbeat();
-    // }, []);
+        checkHeartbeat();
+    }, []);
 
     return (
         <main ref={mainRef}>

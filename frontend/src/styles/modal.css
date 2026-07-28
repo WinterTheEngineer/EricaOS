@@ -66,7 +66,8 @@
     flex-direction: column;
 }
 
-.erica-modal .add-list-items .site-heading {
+.erica-modal .add-list-items .erica-site-heading {
+    margin: 0;
 	margin-top: 1rem;
 }
 
@@ -83,6 +84,10 @@
     list-style: none;
     flex-direction: column;
     background-color: var(--backdrop-grey);
+}
+
+.erica-modal .erica-site-heading {
+    font-size: 1.5rem;
 }
 
 .list-items .modal-list-item {
