@@ -104,6 +104,6 @@ class EditListItem(generics.UpdateAPIView):
 
     def get_queryset(self):
         return ListItem.objects.filter(
-            list_id=self.kwargs["list_id"],
-            list__user=self.request.user,
+            parent_id=self.kwargs["list_id"],
+            parent__author=self.request.user,
         )

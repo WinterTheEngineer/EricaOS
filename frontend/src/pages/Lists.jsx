@@ -65,14 +65,14 @@ function Lists () {
         setActiveScene('lists')
     }, []);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLists([])
-            const res = await api.get("/lists/");
-            setLists(res.data);
-            console.log(lists)
-        };
+    const fetchData = async () => {
+        setLists([])
+        const res = await api.get("/lists/");
+        setLists(res.data);
+        console.log(lists)
+    };
 
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -160,13 +160,16 @@ function Lists () {
         setOpenMenuId(prev => (prev === id ? null : id));
     };
 
-    const editListItem = async () => {
+    const editListItem = async (listId) => {
         const res = await api.patch(
             `/lists/${listId}/items/${refactoredListItem.id}/`,
             {
                 name: refactoredListItem.name,
             }
         );
+
+        setRefactoredListItem("")
+        fetchData();
     }
 
     const setChoice = (choice) => {
@@ -254,7 +257,11 @@ function Lists () {
                                             onChange={handleRefactorChange}
                                         />
                                         <div className="card-action-buttons">
-                                            <button className="erica-site-btn primary" id="confirm">
+                                            <button
+                                                className="erica-site-btn primary"
+                                                id="confirm"
+                                                onClick={() => editListItem(listObj.id)}
+                                            >
                                                 <FaCheck />
                                             </button>
                                             <button className="erica-site-btn secondary" id="cancel" onClick={() => setEditingItemId(null)}>
