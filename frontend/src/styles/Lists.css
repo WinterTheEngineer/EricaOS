@@ -20,6 +20,19 @@ main#lists .main-content {
     flex-direction: column;
 }
 
+.list .card-body .empty-container {
+    gap: .5rem;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.list .card-body .empty-container .erica-site-heading {
+    opacity: .5;
+}
+
 .list .header .details {
     gap: .25rem;
     display: flex;

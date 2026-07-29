@@ -195,7 +195,7 @@ function Lists () {
                 <>
                     {lists.map((listObj, index) => (
                         <Card
-                            className={'erica-card'}
+                            className={'erica-card list'}
                             key={listObj.id}
                             header={
                                 <>
@@ -242,15 +242,14 @@ function Lists () {
                                     </ul>
                                 ) : (
                                     <div className="empty-container">
-                                        <TbPlaylistX />
-                                        <h1 className='site-heading'>Is an empty list good or bad?</h1>
+                                        <h3 className='erica-site-heading'>Is an empty list good or bad?</h3>
                                         <p className="site-p erica-subtext">
                                             Once you add items to the list, they'll show up here.
                                         </p>
                                         <button
                                             onClick={() => setCreateListModalOpen(prev => !prev)}
                                             className='erica-site-btn primary'>
-                                            Add List Items
+                                            <FaPlus />
                                         </button>
                                     </div>
                                 ))
