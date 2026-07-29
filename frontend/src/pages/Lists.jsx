@@ -226,19 +226,34 @@ function Lists () {
                             }
 
                             body={
-                                <ul className={`list-items ${listObj.ordered ? 'ordered' : ''}`}>
-                                    {listObj.items.map((listItem) => (
-                                        <li
-                                            className="list-item" key={listItem.id}
-                                            onClick={() => handleListItem(listItem)}
-                                        >
-                                            {listObj.ordered && 
-                                                <span>{`${listItem.order}.`}</span>
-                                            }
-                                            {listItem.name}
-                                        </li>
-                                    ))}
-                            </ul>
+                                (listObj.items.length > 0 ? (
+                                    <ul className={`list-items ${listObj.ordered ? 'ordered' : ''}`}>
+                                        {listObj.items.map((listItem) => (
+                                            <li
+                                                className="list-item" key={listItem.id}
+                                                onClick={() => handleListItem(listItem)}
+                                            >
+                                                {listObj.ordered && 
+                                                    <span>{`${listItem.order}.`}</span>
+                                                }
+                                                {listItem.name}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <div className="empty-container">
+                                        <TbPlaylistX />
+                                        <h1 className='site-heading'>Is an empty list good or bad?</h1>
+                                        <p className="site-p erica-subtext">
+                                            Once you add items to the list, they'll show up here.
+                                        </p>
+                                        <button
+                                            onClick={() => setCreateListModalOpen(prev => !prev)}
+                                            className='erica-site-btn primary'>
+                                            Add List Items
+                                        </button>
+                                    </div>
+                                ))
                             }
 
                             actions={
@@ -337,13 +352,15 @@ function Lists () {
                                     <IoMdAdd />
                                 </button>
                             </div>
-                            <ul className={`list-items ${activeChoice === 'ordered' ? 'ordered' : ''}`}>
-                                {newListItems.map((item, index) => (
-                                    <li key={index} className="modal-list-item">
-                                        {item.name}
-                                    </li>
-                                ))}
-                            </ul>
+                            {newListItems.length > 0 && (
+                                <ul className={`list-items ${activeChoice === 'ordered' ? 'ordered' : ''}`}>
+                                    {newListItems.map((item, index) => (
+                                        <li key={index} className="modal-list-item">
+                                            {item.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     </form>
                 }

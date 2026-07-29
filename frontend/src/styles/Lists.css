@@ -1,15 +1,16 @@
 main#lists {
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 main#lists .main-content {
-    flex: 1;
     gap: .5rem;
-    display: grid;
+    height: 100%;
+    display: flex;
     padding: .5rem;
-    overflow-y: auto;
-    align-content: flex-start;
+    overflow-y: scroll;
+    flex-direction: column;
     /* background-color: #f6f6f6; */
 }
 
@@ -87,6 +88,8 @@ main#lists .main-content {
 @media screen and (min-width: 1240px) {
 
     main#lists .main-content {
+        display: grid;
+        align-content: flex-start;
         grid-template-columns: repeat(4, 1fr);
     }
     
