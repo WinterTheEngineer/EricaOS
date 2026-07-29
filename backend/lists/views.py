@@ -1,20 +1,11 @@
 from django.db.models import Q
 from .models import List, ListItem
+from lists.defaults import setDefaultLists
 from rest_framework import generics, exceptions
 from rest_framework.response import Response
 from .serializers import ListSerializer, ListItemSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-
-def setDefaults():
-
-    default_lists = [
-        "Grocery List"
-    ]
-
-    default_list_items = {
-        "Grocery List": []
-    }
 
 class ListCreate(generics.CreateAPIView):
     serializer_class = ListSerializer
@@ -49,6 +40,7 @@ class ListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        setDefaultLists(user)
         return List.objects.filter(author=user)
 
 

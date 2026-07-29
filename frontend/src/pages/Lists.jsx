@@ -169,6 +169,7 @@ function Lists () {
         );
 
         setRefactoredListItem("")
+        setEditingItemId("")
         fetchData();
     }
 

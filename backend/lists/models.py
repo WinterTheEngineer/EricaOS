@@ -1,10 +1,13 @@
 import uuid
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.template.defaultfilters import slugify
 
 # Create your models here.
 User = get_user_model()
+now = timezone.now()
+month = now.strftime('%B').lower()
 
 class List(models.Model):
 
@@ -15,6 +18,7 @@ class List(models.Model):
     checklist = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    active_month = models.CharField(max_length=20, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="lists")
 
     def __str__(self):
@@ -23,6 +27,10 @@ class List(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:  #if it's a new list, prevents broken links
             slug_title = slugify(self.title)
+
+            if not self.active_month:
+                self.active_month = timezone.now().strftime('%B')
+
             exists = True
 
             while exists:

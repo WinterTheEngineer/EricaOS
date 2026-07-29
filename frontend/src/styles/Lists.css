@@ -9,6 +9,7 @@ main#lists .main-content {
     display: grid;
     padding: .5rem;
     overflow-y: auto;
+    align-content: flex-start;
     /* background-color: #f6f6f6; */
 }
 
