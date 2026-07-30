@@ -130,6 +130,7 @@ export default function Register() {
                         <input
                             type="text"
                             value={firstName}
+                            className='erica-input-field'
                             onChange={(e) => setFirstName(e.target.value)}
                             placeholder="first name"
                         />
@@ -139,6 +140,7 @@ export default function Register() {
                         <input
                             type="text"
                             value={lastName}
+                            className='erica-input-field'
                             onChange={(e) => setLastName(e.target.value)}
                             placeholder="last name"
                         />
@@ -148,6 +150,7 @@ export default function Register() {
                         <input
                             type="email"
                             value={email}
+                            className='erica-input-field'
                             onChange={(e) => {
                                 setEmail(e.target.value);
                                 validateEmail(e.target.value);
@@ -166,6 +169,7 @@ export default function Register() {
                         <input
                             type={privacy ? "password" : "text"}
                             value={password}
+                            className='erica-input-field'
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="password"
                         />
@@ -183,6 +187,7 @@ export default function Register() {
                         <input
                             type={privacy ? "password" : "text"}
                             value={confirmPassword}
+                            className='erica-input-field'
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="confirm password"
                         />

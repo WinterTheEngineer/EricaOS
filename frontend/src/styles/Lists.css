@@ -1,6 +1,8 @@
 main#lists {
+    gap: 1rem;
     height: 100%;
     display: flex;
+    min-height: none;
     flex-direction: column;
 }
 
@@ -8,7 +10,8 @@ main#lists .main-content {
     gap: .5rem;
     height: 100%;
     display: flex;
-    padding: .5rem;
+    padding: 0 .5rem;
+    min-height: none;
     overflow-y: scroll;
     flex-direction: column;
     /* background-color: #f6f6f6; */
@@ -16,6 +19,7 @@ main#lists .main-content {
 
 .list {
     display: flex;
+    min-height: 12rem;
     position: relative;
     flex-direction: column;
 }

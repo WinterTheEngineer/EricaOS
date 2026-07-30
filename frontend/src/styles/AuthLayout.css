@@ -16,7 +16,7 @@
     justify-content: center;
 }
 
-#root.auth-layout #main {
+#root.auth-layout main {
     display: none;
 }
 
