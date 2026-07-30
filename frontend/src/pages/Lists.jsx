@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 
 import { SlOptionsVertical } from "react-icons/sl";
 import { BiSolidTrashAlt } from "react-icons/bi";
+import { MdOutlineEditNote, MdCancelPresentation } from "react-icons/md";
 import Card from '../components/EricaUI/Card';
 
 function Lists () {
@@ -29,6 +30,7 @@ function Lists () {
     const { setActiveScene } = useOutletContext();
 
     const [editingItemId, setEditingItemId] = useState(null);
+    const [editingList, setEditingList] = useState(null);
     const [refactoredListItem, setRefactoredListItem] = useState({
         id: null,
         name: "",
@@ -40,8 +42,14 @@ function Lists () {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [ordered, setOrdered] = useState(false);
+
+    const [editTitle, setEditTitle] = useState("");
+    const [editDescription, setEditDescription] = useState("");
+    const [editOrdered, setEditOrdered] = useState(false);
+    
     const [loading, setLoading] = useState(false);
     const [createListModalOpen, setCreateListModalOpen] = useState(false)
+    const [editListModalOpen, setEditListModalOpen] = useState(false)
     
     const list_choices = [
         { dataTitle: 'unordered', displayTitle: 'Bullet List' },
@@ -126,7 +134,15 @@ function Lists () {
         setOrdered(false);
         setActiveChoice(list_choices[0].dataTitle)
         setNewListItems([])
-        setCreateListModalOpen(prev => !prev)
+        setCreateListModalOpen(false)
+    }
+
+    const clearEditListModal = () => {
+        setEditTitle("");
+        setEditDescription("");
+        setEditOrdered(false);
+        setNewListItems([])
+        setEditListModalOpen(false)
     }
 
     const handleListItem = (item) => {
@@ -136,6 +152,16 @@ function Lists () {
             id: item.id,
             name: item.name,
         });
+    }
+
+    const handleListChange = (list) => {
+        setEditingList(list);
+        setEditListModalOpen(true)
+
+        setEditTitle(list.title)
+        setNewListItems(list.items)
+        setEditDescription(list.description)
+        // setEditOrdered(list.list_type)
     }
 
     const handleRefactorChange = (e) => {
@@ -216,10 +242,24 @@ function Lists () {
                                     <ul className={`list-options card-options ${openMenuId === listObj.id ? "open" : ""}`}>
                                         <li
                                             className="card-option"
+                                            onClick={() => handleListChange(listObj)}
+                                        >
+                                            <MdOutlineEditNote />
+                                            Edit
+                                        </li>
+                                        <li
+                                            className="card-option"
                                             onClick={() => handleDelete(listObj.id)}
                                         >
                                             <BiSolidTrashAlt />
                                             Delete
+                                        </li>
+                                        <li
+                                            className="card-option"
+                                            onClick={() => toggleListOptions(listObj.id)}
+                                        >
+                                            <MdCancelPresentation />
+                                            Cancel
                                         </li>
                                     </ul>
                                 </>
@@ -239,6 +279,12 @@ function Lists () {
                                                 {listItem.name}
                                             </li>
                                         ))}
+                                        <li
+                                            className="list-item"
+                                            onClick={() => handleListChange(listObj)}
+                                        >
+                                            <FaPlus />
+                                        </li>
                                     </ul>
                                 ) : (
                                     <div className="empty-container">
@@ -247,7 +293,7 @@ function Lists () {
                                             Once you add items to the list, they'll show up here.
                                         </p>
                                         <button
-                                            onClick={() => setCreateListModalOpen(prev => !prev)}
+                                            onClick={() => handleListChange(listObj)}
                                             className='erica-site-btn primary'>
                                             <FaPlus />
                                         </button>
@@ -304,6 +350,78 @@ function Lists () {
                 </div>
             )}
         </div>
+        {editListModalOpen && 
+            <Modal
+                choices={list_choices}
+                onChoiceChange={setChoice}
+                body={
+                    <form className="erica-form">
+                        <input
+                            type="text"
+                            className='erica-title-field'
+                            placeholder="New list title..."
+                            value={editTitle}
+                            onChange={(e) => setEditTitle(e.target.value)}
+                                />
+
+                        <div className="form-input">
+                            <textarea
+                            className='erica-textarea'
+                                placeholder="Description (optional)"
+                                value={editDescription}
+                                onChange={(e) => setEditDescription(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="add-list-items">
+                            <h3 className="erica-site-heading">List Items</h3>
+                            <div className="form-input">
+                                <input
+                                    type="text"
+                                    className='erica-input-field'
+                                    placeholder="Item title"
+                                    value={newListItem}
+                                    onChange={(e) => setNewListItem(e.target.value)}
+                                    onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        addListItem()
+                                    }
+                                }}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={addListItem}
+                                    className="erica-site-btn primary list-item-inline"
+                                >
+                                    <IoMdAdd />
+                                </button>
+                            </div>
+                            {newListItems.length > 0 && (
+                                <ul className={`list-items ${activeChoice === 'ordered' ? 'ordered' : ''}`}>
+                                    {newListItems.map((item, index) => (
+                                        <li key={index} className="modal-list-item">
+                                            {item.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </form>
+                }
+                footer={
+                    <button
+                        type="submit"
+                        onClick={submitList}
+                        className="erica-site-btn primary submit"
+                        disabled={loading}
+                    >
+                        {loading ? "Editing..." : "Edit"}
+                    </button>
+                }
+                onClose={clearEditListModal}
+            />
+        }
         {createListModalOpen &&
             <Modal
                 choices={list_choices}

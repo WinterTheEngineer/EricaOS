@@ -105,6 +105,12 @@ main#lists .main-content {
         align-content: flex-start;
         grid-template-columns: repeat(4, 1fr);
     }
+
+    main#lists .main-content.empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     
     main#lists header .action-bar {
         gap: 1rem;
