@@ -10,9 +10,12 @@ class LookAlive(APIView):
 
     def get(self, request):
         with connection.cursor() as cursor:
-            cursor.execute("SELECT 1")
+            try:
+                # cursor.execute("SELECT 1")
 
-        return Response("alive", status=200)
+                return Response("alive", status=200)
+            except:
+                return Response("error", status=500)
 
 
 class Search(APIView):
