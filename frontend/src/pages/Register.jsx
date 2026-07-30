@@ -10,6 +10,7 @@ import { LuEyeOff } from "react-icons/lu";
 
 import PhoneInput from "react-phone-input-2";
 import api from "../api";
+import { login } from '../utils/authService';
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
@@ -79,8 +80,8 @@ export default function Register() {
 
         try {
             await register({
-                firstName,
-                lastName,
+                first_name: firstName,
+                last_name: lastName,
                 email,
                 password,
                 confirmPassword

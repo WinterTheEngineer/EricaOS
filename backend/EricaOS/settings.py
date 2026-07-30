@@ -33,8 +33,7 @@ DEBUG = os.getenv("DEBUG").lower() == "true"
 
 ALLOWED_HOSTS = [
     '.onrender.com',
-    '192.168.18.68',
-    '192.168.1.224',
+    '192.168.18.133',
     '127.0.0.1',
     '192.168.2.185'
 ]
