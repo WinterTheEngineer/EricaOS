@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 
 import { SlOptionsVertical } from "react-icons/sl";
 import { BiSolidTrashAlt } from "react-icons/bi";
+import { PiUsersThreeFill } from "react-icons/pi";
 import { MdOutlineEditNote, MdCancelPresentation } from "react-icons/md";
 import Card from '../components/EricaUI/Card';
 
@@ -200,6 +201,7 @@ function Lists () {
     }
 
     const setChoice = (choice) => {
+        console.log('setChoice called with:', JSON.stringify(choice));
         setActiveChoice(choice);
         activeChoice === 'ordered' ? setOrdered(true) : setOrdered(false)
         // console.log(activeChoice)
@@ -256,6 +258,12 @@ function Lists () {
                                         </li>
                                         <li
                                             className="card-option"
+                                        >
+                                            <PiUsersThreeFill />
+                                            Add Co-Authors
+                                        </li>
+                                        <li
+                                            className="card-option"
                                             onClick={() => toggleListOptions(listObj.id)}
                                         >
                                             <MdCancelPresentation />
@@ -267,7 +275,7 @@ function Lists () {
 
                             body={
                                 (listObj.items.length > 0 ? (
-                                    <ul className={`list-items ${listObj.ordered ? 'ordered' : ''}`}>
+                                    <ul className={`list-items ${listObj.ordered ? 'ordered' : ''} ${listObj.checklist ? 'checklist' : ''}`}>
                                         {listObj.items.map((listItem) => (
                                             <li
                                                 className="list-item" key={listItem.id}
@@ -275,6 +283,9 @@ function Lists () {
                                             >
                                                 {listObj.ordered && 
                                                     <span>{`${listItem.order}.`}</span>
+                                                }
+                                                {listObj.checklist && 
+                                                    <input type="checkbox" name="completed" id="completed" />
                                                 }
                                                 {listItem.name}
                                             </li>
@@ -426,6 +437,7 @@ function Lists () {
             <Modal
                 choices={list_choices}
                 onChoiceChange={setChoice}
+                modalId={'create-list'}
                 body={
                     <form className="erica-form">
                         <input
@@ -470,9 +482,12 @@ function Lists () {
                                 </button>
                             </div>
                             {newListItems.length > 0 && (
-                                <ul className={`list-items ${activeChoice === 'ordered' ? 'ordered' : ''}`}>
+                                <ul className={`modal-list-items ${activeChoice === 'ordered' ? 'ordered' : ''} ${activeChoice === 'checklist' ? 'checklist' : ''}`}>
                                     {newListItems.map((item, index) => (
                                         <li key={index} className="modal-list-item">
+                                            {activeChoice === 'ordered' && 
+                                                <span>{index+1}.</span>
+                                            }
                                             {item.name}
                                         </li>
                                     ))}

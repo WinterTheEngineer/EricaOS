@@ -18,6 +18,7 @@ class List(models.Model):
     checklist = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    co_authors = models.ManyToManyField(User)
     active_month = models.CharField(max_length=20, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="lists")
 

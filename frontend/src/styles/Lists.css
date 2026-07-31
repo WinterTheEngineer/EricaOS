@@ -88,12 +88,6 @@ main#lists .main-content {
                 .3s ease background-color;
 }
 
-.list-items.ordered .list-item {
-    width: 100%;
-    max-width: none;
-    border-radius: var(--global-border-radius);
-}
-
 .list-item:hover {
     background-color: #a229da44;
 }

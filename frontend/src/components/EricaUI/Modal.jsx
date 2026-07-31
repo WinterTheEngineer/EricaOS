@@ -4,11 +4,11 @@ import { IoMdClose } from "react-icons/io";
 import sidebarLogo from "../../assets/sidebar-logo.png";
 import { useState } from 'react';
 
-function Modal({body, footer, onClose, className, tabs, activeTab, onTabChange, choices, activeChoice, onChoiceChange}) {
+function Modal({body, footer, onClose, modalId, tabs, activeTab, onTabChange, choices, activeChoice, onChoiceChange}) {
 
     return (
         <>
-            <div className={`erica-modal ${className}`}>
+            <div className='erica-modal' id={modalId}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <img src={sidebarLogo} alt="Erica Logo" className="logo" />

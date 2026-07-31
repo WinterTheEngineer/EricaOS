@@ -89,6 +89,8 @@ a {
 	cursor: pointer;
 	place-items: center;
 	border-radius: var(--global-border-radius);
+	transition: .3s ease background-color,
+				.3s ease color;
 }
 
 .erica-site-btn.primary{
@@ -107,10 +109,12 @@ a {
 
 .erica-site-btn.primary:hover {
 	color: var(--erica-fuschia);
+	background-color: transparent;
 }
 
 .erica-site-btn.secondary:hover {
 	color: #000000;
+	background-color: transparent;
 }
 
 .erica-site-link {

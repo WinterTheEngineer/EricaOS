@@ -60,32 +60,14 @@ nav.active {
     padding: 1rem 0;
 }
 
-.nav-actions a {
-    flex: 1;
-    display: flex;
-    padding: .5rem 0;
-    color: #ffffff;
+.nav-actions .erica-site-btn {
+    width: 6rem;
     font-size: .8rem;
-    align-items: center;
-    border-radius: .25rem;
-    justify-content: center;
-    background-color: #000000;
-    transition: .3s ease color,
-                .3s ease background-color;
 }
 
-.nav-actions a.sign-up {
-    border: 2px solid #a92be3;
-    background-color: #a92be3;
-}
-
-.nav-actions a.sign-up:hover {
-    color: #a92be3;
-}
-
-.nav-actions a:hover {
-    color: #000000;
-    background-color: transparent;
+.nav-container.mobile .nav-actions .erica-site-btn {
+    flex: 1;
+    width: auto;
 }
 
 .nav-list {
