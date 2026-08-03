@@ -76,3 +76,13 @@ class ListSerializer(serializers.ModelSerializer):
             )
 
         return list_obj
+
+
+class AddCoAuthorSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        try:
+            return User.objects.get(email=value)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("No user with that email exists.")

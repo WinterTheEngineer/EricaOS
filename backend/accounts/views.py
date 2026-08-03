@@ -1,9 +1,13 @@
+import requests
 from .models import User
+from django.conf import settings
+from google.oauth2 import id_token
 from .serializers import SignupSerializer
 
 from rest_framework.views import APIView
 from rest_framework import generics, status
 from rest_framework.response import Response
+from google.auth.transport import requests as google_requests
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -114,6 +118,75 @@ class ValidateFieldView(APIView):
             "exists": exists,
             "available": not exists
         }, status=status.HTTP_200_OK)
+
+
+class GoogleLogin(APIView):
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+
+        code = request.data.get("code")
+
+        print(settings.GOOGLE_REDIRECT_URI)
+        print(settings.GOOGLE_CLIENT_ID)
+
+        try:
+            response = requests.post(
+                "https://oauth2.googleapis.com/token",
+                data={
+                    "code": code,
+                    "client_id": settings.GOOGLE_CLIENT_ID,
+                    "client_secret": settings.GOOGLE_CLIENT_SECRET,
+                    "redirect_uri": "postmessage",
+                    "grant_type": "authorization_code",
+                },
+            )
+        except requests.exceptions.RequestException:
+            return Response(
+                {"error": "Could not reach Google's servers"},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+
+        token_data = response.json()
+
+        id_info = id_token.verify_oauth2_token(
+            token_data["id_token"],
+            google_requests.Request(),
+            settings.GOOGLE_CLIENT_ID,
+        )
+
+        user = User.objects.filter(email=id_info['email']).first()
+
+        if user is not None:
+            if user.profile.google_sub is None:
+                user.profile.google_sub = id_info["sub"]
+                user.profile.save()
+                refresh = RefreshToken.for_user(user)
+                return Response(
+                    {
+                        "exists": True,
+                        "authorize": True,
+                        "access": str(refresh.access_token),
+                        "refresh": str(refresh),
+                    },
+                    status=status.HTTP_200_OK,
+                )
+            elif user.profile.google_sub == id_info["sub"]:
+                refresh = RefreshToken.for_user(user)
+                return Response(
+                    {
+                        "exists": True,
+                        "authorize": True,
+                        "access": str(refresh.access_token),
+                        "refresh": str(refresh),
+                    },
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response({"exists": True, "authorize": False}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({"exists": False, "authorize": False}, status=status.HTTP_404_NOT_FOUND)
     
 
 class DisplayProfile(APIView):

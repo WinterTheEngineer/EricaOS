@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('register/', views.SignupView.as_view(), name="register"),
+    path('google-login/', views.GoogleLogin.as_view()),
     path("validate/<str:field>/", views.ValidateFieldView.as_view(), name="validate-field"),
     path("token/", views.MyTokenObtainPairView.as_view(), name="get_token"),
     path("token/refresh/", TokenRefreshView.as_view(), name="refresh"),

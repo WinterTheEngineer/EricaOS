@@ -42,6 +42,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    google_sub = models.CharField(blank=True, null=True) # new
 
     def get_display_profile(self, request):
         return {
