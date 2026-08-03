@@ -1,5 +1,5 @@
 import '../styles/Form.css'
-import { login } from '../utils/authService';
+import { login, handleGoogleSuccess } from '../utils/authService';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { IoClose } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { MdPermPhoneMsg } from "react-icons/md";
+import { useGoogleLogin } from "@react-oauth/google";
 
 import { toast } from 'react-toastify';
 
@@ -43,6 +44,22 @@ function Login() {
         }
     };
 
+    const login_with_google = useGoogleLogin({
+        flow: "auth-code",
+        redirect_uri: 'http://localhost:5173/login',
+        onSuccess: async ({ code }) => {
+            try {
+                await handleGoogleSuccess({ code });
+                navigate("/dashboard");
+            } catch (err) {
+                toast.error("Google login failed.");
+            }
+        },
+        onError: () => {
+            toast.error("Google Sign In Failed");
+        },
+    });
+
     return (<>
         <>
             <form onSubmit={handleSubmit} className="erica-form" id="login">
@@ -51,17 +68,12 @@ function Login() {
                     <h1 className='erica-site-heading'>Welcome Back</h1>
                 </div>
                 <div className="oauth-login">
-                    <button className="erica-site-btn google auth">
-                        <FcGoogle />
-                        Google
-                    </button>
-                    <button className="erica-site-btn google auth">
-                        <FaApple />
-                        Apple
-                    </button>
-                    <button className="erica-site-btn google auth">
-                        <MdPermPhoneMsg />
-                        Phone
+                    <button
+                        type='button'
+                        className="erica-site-btn"
+                        onClick={login_with_google}
+                    >
+                        <FcGoogle /> Sign in with google
                     </button>
                 </div>
                 <p className="separator site-p">
@@ -83,7 +95,7 @@ function Login() {
                             value={password}
                             className='erica-input-field'
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="password"
+                            placeholder="Password"
                         />
                         <div
                             onClick={() => {setPrivacy(prev => !prev)}}

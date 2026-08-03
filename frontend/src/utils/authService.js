@@ -40,3 +40,17 @@ export const refresh = async() => {
     return res.data.access;
 
 }
+
+export const handleGoogleSuccess = async ({ code }) => {
+    try {
+        const res = await api.post("/accounts/google-login/", {
+            code,
+        });
+
+        localStorage.setItem(ACCESS_TOKEN, res.data.access)
+        localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
+
+    } catch (err) {
+        console.error(`ERROR ${err}`);
+    }
+};

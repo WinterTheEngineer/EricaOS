@@ -279,7 +279,6 @@ function Lists () {
                                         {listObj.items.map((listItem) => (
                                             <li
                                                 className="list-item" key={listItem.id}
-                                                onClick={() => handleListItem(listItem)}
                                             >
                                                 {listObj.ordered && 
                                                     <span>{`${listItem.order}.`}</span>
@@ -287,7 +286,9 @@ function Lists () {
                                                 {listObj.checklist && 
                                                     <input type="checkbox" name="completed" id="completed" />
                                                 }
-                                                {listItem.name}
+                                                <p className="list-item-content" onClick={() => handleListItem(listItem)}>
+                                                    {listItem.name}
+                                                </p>
                                             </li>
                                         ))}
                                         <li

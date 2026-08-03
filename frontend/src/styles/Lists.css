@@ -77,15 +77,24 @@ main#lists .main-content {
     max-width: 10rem;
     font-size: .8rem;
     color: #000000;
-    overflow: hidden;
     border-radius: 2rem;
-    white-space: nowrap;
     height: min-content;
     padding: .5rem .5rem;
-    text-overflow: ellipsis;
     background-color: #a229da1f;
     transition: .3s ease box-shadow,
-                .3s ease background-color;
+    .3s ease background-color;
+}
+
+.list-item-content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.list-items.ordered .list-item {
+    width: 100%;
+    max-width: none;
+    border-radius: .25rem;
 }
 
 .list-item:hover {
