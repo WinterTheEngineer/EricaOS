@@ -136,6 +136,26 @@
     width: 4rem;
 }
 
+#signup-redirect .modal-body {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#signup-redirect .modal-body .erica-site-heading {
+    text-align: center;
+}
+
+#signup-redirect .modal-body .modal-icon {
+    height: 5rem;
+}
+
+#signup-redirect .modal-footer .erica-site-btn {
+    width: 8rem;
+    font-size: 1rem;
+}
+
 @media screen and (min-width: 1240px) {
     .erica-modal .modal-content {
         width: 32rem;
