@@ -4,8 +4,8 @@
 
 #root.dash-layout {
 	width: 100vw;
-	height: 100vh;
 	display: flex;
+	height: 100dvh;
     align-items: center;
     flex-direction: column;
 }
